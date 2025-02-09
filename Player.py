@@ -44,7 +44,7 @@ class Player(Entity):
         self.last_dir = ""
 
     def checkCollide(self):
-        collide = pygame.sprite.spritecollide(self, self.game.water_group, False, collided = pygame.sprite.collide_mask)
+        collide = pygame.sprite.spritecollide(self, self.game.world.actualwater_group, False, collided = pygame.sprite.collide_mask)
         if collide :
             return True
         return False

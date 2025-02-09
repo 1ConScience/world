@@ -3,45 +3,51 @@ from Stag import *
 from Object import *
 import noise
 
-nb_tiles_x = 28
-nb_tiles_y = 61
+nb_tiles_x = 22
+nb_tiles_y = 48
 
 class World:
     def __init__(self,game):
         self.game = game
 
+        self.subworlds = {}
+
+        self.actualsubworlds = {}
+        self.addSubWorld(0,0)
+        self.addSubWorld(nb_tiles_x,0)
+        self.addSubWorld(0,nb_tiles_y)
+        self.addSubWorld(nb_tiles_x,nb_tiles_y)
+
+        self.actualtiles = []
+        self.actualwater_group = pygame.sprite.Group()
+        for cle, subworld in self.actualsubworlds.items():
+            for tile in subworld.tiles:
+                self.actualtiles.append(tile)
+                if tile.id_ == "104" :
+                    tile.add(self.actualwater_group)
+
+        self.actualtiles.sort(key=lambda x: x.zindex, reverse=False)
+        
+    def addSubWorld(self,x,y):
+        if str(x)+";"+str(y) not in self.actualsubworlds:
+            self.actualsubworlds[str(x)+";"+str(y)] = SubWorld(self.game,x,y)
+
+class SubWorld:
+    def __init__(self,game,centerx,centery):
+        self.game = game
+
+        self.centerx = centerx
+        self.centery = centery
+
+
         self.objects = []
-
         self.animals = []
-        self.add_animals()
-
         self.tiles = []
-        self.add_tiles(0,0,nb_tiles_x,nb_tiles_y)
-        self.topincognita = 0-1
-        self.bottomincognita = nb_tiles_y
-        self.leftincognita = 0-1
-        self.rightincognita = nb_tiles_x
+        self.add_elements(self.centerx-round(nb_tiles_x/2),self.centery-round(nb_tiles_y/2))
 
-    def expand(self):
-        if self.game.player.pos.x > self.rightincognita*32 - (nb_tiles_x/2)*32 :
-            self.add_tiles(self.rightincognita,0,1,nb_tiles_y)
-            self.rightincognita +=1
-
-        if self.game.player.pos.y > self.bottomincognita*8 - (nb_tiles_y/2)*8 :
-            self.add_tiles(0,self.bottomincognita,nb_tiles_x,1)
-            self.bottomincognita +=1
-
-        if self.game.player.pos.x < self.leftincognita*32 + (nb_tiles_x/2)*32 :
-            self.add_tiles(self.leftincognita,0,1,nb_tiles_y)
-            self.leftincognita -=1
-
-        if self.game.player.pos.y < self.topincognita*8 + (nb_tiles_y/2)*8 :
-            self.add_tiles(0,self.topincognita,nb_tiles_x,1)
-            self.topincognita -=1
-
-    def add_tiles(self,start_x,start_y,range_x,range_y):
-        end_x = start_x+range_x
-        end_y = start_y+range_y
+    def add_elements(self,start_x,start_y):
+        end_x = start_x+nb_tiles_x
+        end_y = start_y+nb_tiles_y
         scale = 13
         octaves = 7
         lacunarity = 1.0
@@ -68,15 +74,14 @@ class World:
                     luck = random.randint(0,10)
                     if luck == 0 :
                         self.add_rock(tile.rect)
-                elif tile.id_ == "104" :
-                    tile.add(self.game.water_group)
+                    
+                luck = random.randint(0,200)
+                if luck == 0 :
+                    self.add_animals((x*32,y*8))
 
-        self.tiles.sort(key=lambda x: x.zindex, reverse=False)
-
-    def add_animals(self):
-        for i in range(3):
-            animal = Stag((random.randint(0,self.game.w_),random.randint(0,self.game.h_)))
-            self.animals.append(animal)
+    def add_animals(self,pos):
+        animal = Stag(pos)
+        self.animals.append(animal)
 
     def add_flower(self,pos):
         flower = Flower(pos)

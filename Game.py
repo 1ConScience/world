@@ -11,10 +11,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
 
-        self.water_group = pygame.sprite.Group()
-
-        self.w_ = 854
-        self.h_ = 480
+        self.w_ = 640
+        self.h_ = 360
         self.display_surf = pygame.Surface((self.w_, self.h_))
 
         self.world = World(self)
@@ -37,8 +35,6 @@ class Game:
             self.screen.fill("black")
             
             self.player.move()
-
-            self.world.expand()
             
             self.updateCamera()
 
@@ -64,9 +60,10 @@ class Game:
                     elem.display(self.display_surf,self.camera)
 
     def display(self):
-        self.displayOnlyScreen(self.world.tiles)
-        self.displayOnlyScreen(self.world.objects)
-        self.displayOnlyScreen(self.world.animals)
+        self.displayOnlyScreen(self.world.actualtiles)
+        for cle, subworld in self.world.actualsubworlds.items():
+            self.displayOnlyScreen(subworld.objects)
+            self.displayOnlyScreen(subworld.animals)
 
         self.player.display(self.display_surf,self.camera)
 
