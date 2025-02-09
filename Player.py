@@ -29,7 +29,7 @@ class Player(Entity):
 
         self.surf = self.idle_right_up_sheet.subsurface((0,0,self.w_frame,self.h_frame))
         self.shadow = pygame.image.load("assets/character/ShadowBetter.png").convert_alpha()
-        self.rect = self.surf.get_rect(midbottom = (self.game.w_/2,self.game.h_/2))
+        self.rect = self.surf.get_rect(midbottom = (0,0))
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/character/mask.png").convert_alpha())
 
         self.index_frame = 0 #that keeps track on the current index of the image list.
@@ -38,7 +38,7 @@ class Player(Entity):
 
         self.frames_number = frames
 
-        self.pos = vec((self.game.w_/2, self.game.h_/2))
+        self.pos = vec((0, 0))
         self.vel = vec(0,0)
 
         self.last_dir = ""

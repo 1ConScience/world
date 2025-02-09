@@ -21,8 +21,8 @@ class Game:
 
         self.player = Player(self)
 
-        self.camera_aim = vec(0,0)
-        self.camera = vec(0,0)
+        self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
+        self.camera = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
     
     def run(self):
         while self.running:
