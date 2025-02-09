@@ -10,21 +10,19 @@ class World:
         self.game = game
 
         self.subworlds = {}
-        self.genWorld()
 
         self.actualsubworlds = {}
         self.actualtiles = []
         self.actualwater_group = pygame.sprite.Group()
 
-        self.updateActualSubworlds((0,0))
-
-    def genWorld(self):
-        for y in range (-1,1,1):
-            for x in range(-1,1,1):
+        for y in range (-1,2,1):
+            for x in range(-1,2,1):
                 self.addSubWorld(x*TILES_WIDTH,y*TILES_HEIGHT)
 
     def addSubWorld(self,x,y):
         self.subworlds[str(x)+";"+str(y)] = SubWorld(self.game,x,y)
+        self.actualsubworlds[str(x)+";"+str(y)]=self.subworlds[str(x)+";"+str(y)]
+        self.updateActualTilesAndWaterGroup()
 
     def updateActualTilesAndWaterGroup(self):
         self.actualtiles.clear()
@@ -40,8 +38,11 @@ class World:
 
     def updateSpecificActualSubworld(self,gnocchis):
         if str(gnocchis[0])+";"+str(gnocchis[1]) not in self.subworlds:
-            self.addSubWorld(gnocchis[0],gnocchis[1])
-        self.actualsubworlds[str(gnocchis[0])+";"+str(gnocchis[1])]=self.subworlds[str(gnocchis[0])+";"+str(gnocchis[1])]
+            a = threading.Thread(None, self.addSubWorld, None, (gnocchis[0],gnocchis[1]), {})
+            a.start()
+        else :
+            self.actualsubworlds[str(gnocchis[0])+";"+str(gnocchis[1])]=self.subworlds[str(gnocchis[0])+";"+str(gnocchis[1])]
+            self.updateActualTilesAndWaterGroup()
 
     def updateActualSubworlds(self,gnocchis):
         self.actualsubworlds.clear()
@@ -55,8 +56,6 @@ class World:
         self.updateSpecificActualSubworld((gnocchis[0]-TILES_WIDTH,gnocchis[1]-TILES_HEIGHT))
         self.updateSpecificActualSubworld((gnocchis[0]-TILES_WIDTH,gnocchis[1]+TILES_HEIGHT))
         self.updateSpecificActualSubworld((gnocchis[0]+TILES_WIDTH,gnocchis[1]-TILES_HEIGHT))
-
-        self.updateActualTilesAndWaterGroup()
 
 class SubWorld:
     def __init__(self,game,centerx,centery):
