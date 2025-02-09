@@ -3,6 +3,7 @@ from Stag import *
 from Object import *
 import noise
 from constvar import *
+import threading
 
 class World:
     def __init__(self,game):
@@ -18,26 +19,12 @@ class World:
         self.updateActualSubworlds((0,0))
 
     def genWorld(self):
-        for y in range (-4,4,1):
-            for x in range(-4,4,1):
+        for y in range (-1,1,1):
+            for x in range(-1,1,1):
                 self.addSubWorld(x*TILES_WIDTH,y*TILES_HEIGHT)
-        '''#gen first zone
-        self.addSubWorld(0,0)
-
-        self.addSubWorld(TILES_WIDTH,0)
-        self.addSubWorld(0,TILES_HEIGHT)
-        self.addSubWorld(TILES_WIDTH,TILES_WIDTH)
-
-        self.addSubWorld(-TILES_WIDTH,0)
-        self.addSubWorld(0,-TILES_HEIGHT)
-        self.addSubWorld(-TILES_WIDTH,-TILES_HEIGHT)
-
-        self.addSubWorld(TILES_WIDTH,-TILES_HEIGHT)
-        self.addSubWorld(-TILES_WIDTH,TILES_HEIGHT)'''
 
     def addSubWorld(self,x,y):
-        if str(x)+";"+str(y) not in self.subworlds:
-            self.subworlds[str(x)+";"+str(y)] = SubWorld(self.game,x,y)
+        self.subworlds[str(x)+";"+str(y)] = SubWorld(self.game,x,y)
 
     def updateActualTilesAndWaterGroup(self):
         self.actualtiles.clear()
