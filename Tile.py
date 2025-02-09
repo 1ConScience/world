@@ -28,7 +28,7 @@ class Tile(Entity):
         if value < -0.3 :
             luck = random.randint(0,10)
             if luck == 0 :
-                return "066"
+                return "068"
             else :
                 return "104"
         elif value < -0.2 :

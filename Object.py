@@ -27,3 +27,11 @@ class Wood(Object):
         id_str = "0"+str(id)
         
         super().__init__(rect,id_str) 
+    
+class Rock(Object):
+    def __init__(self,rect):
+
+        id = random.randint(64,65)
+        id_str = "0"+str(id)
+        
+        super().__init__(rect,id_str) 

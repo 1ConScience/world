@@ -64,6 +64,10 @@ class World:
                     luck = random.randint(0,10)
                     if luck == 0 :
                         self.add_wood(tile.rect)
+                elif tile.id_ == "063" :
+                    luck = random.randint(0,10)
+                    if luck == 0 :
+                        self.add_rock(tile.rect)
                 elif tile.id_ == "104" :
                     tile.add(self.game.water_group)
 
@@ -81,3 +85,7 @@ class World:
     def add_wood(self,pos):
         wood = Wood(pos)
         self.objects.append(wood)
+
+    def add_rock(self,pos):
+        rock = Rock(pos)
+        self.objects.append(rock)
