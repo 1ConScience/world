@@ -2,24 +2,46 @@ from Tile import *
 from Stag import *
 from Object import *
 import noise
-
-nb_tiles_x = 22
-nb_tiles_y = 48
+from constvar import *
 
 class World:
     def __init__(self,game):
         self.game = game
 
         self.subworlds = {}
+        self.addSubWorld(0,0)
+
+        self.addSubWorld(TILES_WIDTH,0)
+        self.addSubWorld(0,TILES_HEIGHT)
+        self.addSubWorld(TILES_WIDTH,TILES_HEIGHT)
+
+        self.addSubWorld(-TILES_WIDTH,0)
+        self.addSubWorld(0,-TILES_HEIGHT)
+        self.addSubWorld(-TILES_WIDTH,-TILES_HEIGHT)
+
+        self.addSubWorld(TILES_WIDTH,-TILES_HEIGHT)
+        self.addSubWorld(-TILES_WIDTH,TILES_HEIGHT)
 
         self.actualsubworlds = {}
-        self.addSubWorld(0,0)
-        self.addSubWorld(nb_tiles_x,0)
-        self.addSubWorld(0,nb_tiles_y)
-        self.addSubWorld(nb_tiles_x,nb_tiles_y)
-
         self.actualtiles = []
         self.actualwater_group = pygame.sprite.Group()
+
+        self.actualsubworlds.clear()
+        for cle, value in self.subworlds.items():
+            self.actualsubworlds[cle]=value
+        self.updateActualTilesAndWaterGroup()
+
+        #generate subworlds, exist but no visible
+        self.addSubWorld(TILES_WIDTH*2,TILES_HEIGHT*2)
+
+    def addSubWorld(self,x,y):
+        if str(x)+";"+str(y) not in self.subworlds:
+            self.subworlds[str(x)+";"+str(y)] = SubWorld(self.game,x,y)
+
+    def updateActualTilesAndWaterGroup(self):
+        self.actualtiles.clear()
+        self.actualwater_group.empty()
+
         for cle, subworld in self.actualsubworlds.items():
             for tile in subworld.tiles:
                 self.actualtiles.append(tile)
@@ -27,10 +49,9 @@ class World:
                     tile.add(self.actualwater_group)
 
         self.actualtiles.sort(key=lambda x: x.zindex, reverse=False)
-        
-    def addSubWorld(self,x,y):
-        if str(x)+";"+str(y) not in self.actualsubworlds:
-            self.actualsubworlds[str(x)+";"+str(y)] = SubWorld(self.game,x,y)
+
+    def update(self):
+        pass
 
 class SubWorld:
     def __init__(self,game,centerx,centery):
@@ -43,11 +64,11 @@ class SubWorld:
         self.objects = []
         self.animals = []
         self.tiles = []
-        self.add_elements(self.centerx-round(nb_tiles_x/2),self.centery-round(nb_tiles_y/2))
+        self.add_elements(self.centerx-round(TILES_WIDTH/2),self.centery-round(TILES_HEIGHT/2))
 
     def add_elements(self,start_x,start_y):
-        end_x = start_x+nb_tiles_x
-        end_y = start_y+nb_tiles_y
+        end_x = start_x+TILES_WIDTH
+        end_y = start_y+TILES_HEIGHT
         scale = 13
         octaves = 7
         lacunarity = 1.0
@@ -57,9 +78,9 @@ class SubWorld:
                 value = noise.pnoise2(x/scale,y/scale,octaves=octaves,persistence=persistence,lacunarity=lacunarity,repeatx=end_x,repeaty=end_y,base=0)
                 tile = None
                 if y%2 == 0:
-                    tile = Tile((x*32,y*8),value,y)
+                    tile = Tile((x*TILE_SIZE,y*TILE_SIZE/4),value,y)
                 else :
-                    tile = Tile((x*32+16,y*8),value,y)
+                    tile = Tile((x*TILE_SIZE+TILE_SIZE/2,y*TILE_SIZE/4),value,y)
                 self.tiles.append(tile)
                 
                 if tile.id_ == "040" :
@@ -77,7 +98,7 @@ class SubWorld:
                     
                 luck = random.randint(0,200)
                 if luck == 0 :
-                    self.add_animals((x*32,y*8))
+                    self.add_animals((x*TILE_SIZE,y*TILE_SIZE/4))
 
     def add_animals(self,pos):
         animal = Stag(pos)

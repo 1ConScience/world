@@ -35,6 +35,8 @@ class Game:
             self.screen.fill("black")
             
             self.player.move()
+
+            self.world.update()
             
             self.updateCamera()
 
@@ -55,8 +57,8 @@ class Game:
 
     def displayOnlyScreen(self,list):
         for elem in list :
-            if elem.rect.x >= self.camera.x-32 and elem.rect.x <= self.camera.x+self.w_ :
-                if elem.rect.y >= self.camera.y-32 and elem.rect.y <= self.camera.y+self.h_ :
+            if elem.rect.x >= self.camera.x-TILE_SIZE and elem.rect.x <= self.camera.x+self.w_ :
+                if elem.rect.y >= self.camera.y-TILE_SIZE and elem.rect.y <= self.camera.y+self.h_ :
                     elem.display(self.display_surf,self.camera)
 
     def display(self):

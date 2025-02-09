@@ -1,7 +1,6 @@
 import pygame
 from Entity import *
-
-vec = pygame.math.Vector2 
+from constvar import *
 
 class Player(Entity):
     def __init__(self,game):
@@ -43,6 +42,12 @@ class Player(Entity):
 
         self.last_dir = ""
 
+        self.actualsubworldkey = (0,0)
+
+    def testNewSubworldkey(self):
+        if self.pos.x > self.actualsubworldkey[0]*TILE_SIZE :
+            pass
+
     def checkCollide(self):
         collide = pygame.sprite.spritecollide(self, self.game.world.actualwater_group, False, collided = pygame.sprite.collide_mask)
         if collide :
@@ -65,7 +70,7 @@ class Player(Entity):
         self.animate()
         
         if self.vel != vec(0,0):
-            pygame.math.Vector2.scale_to_length(self.vel, 1.3)
+            pygame.math.Vector2.scale_to_length(self.vel, VELOCITY)
 
         self.pos += self.vel
 
