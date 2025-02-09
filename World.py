@@ -18,22 +18,22 @@ class World:
         self.updateActualSubworlds((0,0))
 
     def genWorld(self):
-        #gen first zone
+        for y in range (-4,4,1):
+            for x in range(-4,4,1):
+                self.addSubWorld(x*TILES_WIDTH,y*TILES_HEIGHT)
+        '''#gen first zone
         self.addSubWorld(0,0)
 
         self.addSubWorld(TILES_WIDTH,0)
         self.addSubWorld(0,TILES_HEIGHT)
-        self.addSubWorld(TILES_WIDTH,TILES_HEIGHT)
+        self.addSubWorld(TILES_WIDTH,TILES_WIDTH)
 
         self.addSubWorld(-TILES_WIDTH,0)
         self.addSubWorld(0,-TILES_HEIGHT)
         self.addSubWorld(-TILES_WIDTH,-TILES_HEIGHT)
 
         self.addSubWorld(TILES_WIDTH,-TILES_HEIGHT)
-        self.addSubWorld(-TILES_WIDTH,TILES_HEIGHT)
-
-        #gen second zone
-        self.addSubWorld(TILES_WIDTH*2,TILES_HEIGHT*2)
+        self.addSubWorld(-TILES_WIDTH,TILES_HEIGHT)'''
 
     def addSubWorld(self,x,y):
         if str(x)+";"+str(y) not in self.subworlds:
@@ -52,8 +52,9 @@ class World:
         self.actualtiles.sort(key=lambda x: x.zindex, reverse=False)
 
     def updateSpecificActualSubworld(self,gnocchis):
-        if str(gnocchis[0])+";"+str(gnocchis[1]) in self.subworlds:
-            self.actualsubworlds[str(gnocchis[0])+";"+str(gnocchis[1])]=self.subworlds[str(gnocchis[0])+";"+str(gnocchis[1])]
+        if str(gnocchis[0])+";"+str(gnocchis[1]) not in self.subworlds:
+            self.addSubWorld(gnocchis[0],gnocchis[1])
+        self.actualsubworlds[str(gnocchis[0])+";"+str(gnocchis[1])]=self.subworlds[str(gnocchis[0])+";"+str(gnocchis[1])]
 
     def updateActualSubworlds(self,gnocchis):
         self.actualsubworlds.clear()

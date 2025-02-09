@@ -7,4 +7,4 @@ TILE_SIZE = 32
 
 vec = pygame.math.Vector2 
 
-VELOCITY = 1.3
+VELOCITY = 1.2
