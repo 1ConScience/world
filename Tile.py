@@ -24,7 +24,7 @@ class Tile(Entity):
             self.water = AnimatedObject("tiles/water_animation",6,8,pos)
             self.surf = self.water.surf
 
-    def getIdOLD(self,value):
+    def getId(self,value):
         if value < -0.3 :
             luck = random.randint(0,10)
             if luck == 0 :
@@ -53,39 +53,41 @@ class Tile(Entity):
             id = random.randint(17,21)
             return "0"+str(id)
 
-    def getId(self,value):
-        if value < -0.3 :
+    #min -0.5382837653160095
+    #max : 0.7629426717758179
+    def getIdindev(self,value):
+        if value < -0.30 :
             return "104"
         elif value < -0.25 :
-            return "070"
-        elif value < -0.2 :
+            return "040"
+        elif value < -0.20 :
             return "036"
         elif value < -0.15 :
             return "035"
-        elif value < -0.1 :
+        elif value < -0.10 :
             return "034"
         elif value < -0.05 :
             return "033"
-        elif value < 0.0 :
+        elif value < 0.00 :
             return "032"
-        elif value < 0.5 :
+        elif value < 0.05 :
             return "031"
-        elif value < 0.1 :
+        elif value < 0.10 :
             return "028"
         elif value < 0.15 :
             return "027"
-        elif value < 0.2 :
+        elif value < 0.20 :
             return "026"
         elif value < 0.25 :
             return "025"
-        elif value < 0.3 :
+        elif value < 0.30 :
             return "015"
         elif value < 0.35 :
             return "014"
-        elif value < 0.4 :
-            return "061"
+        elif value < 0.40 :
+            return "011"
         else :
-            return "062"
+            return "013"
         
     def animate(self):
         if self.id_ == "104":

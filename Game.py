@@ -18,7 +18,6 @@ class Game:
         self.display_surf = pygame.Surface((self.w_, self.h_))
 
         self.world = World(self)
-        print(self.world.table_possible_values)
 
         self.player = Player(self)
 
@@ -58,15 +57,17 @@ class Game:
 
         pygame.quit()
 
+    def displayOnlyScreen(self,list):
+        for elem in list :
+            if elem.rect.x >= self.camera.x-32 and elem.rect.x <= self.camera.x+self.w_ :
+                if elem.rect.y >= self.camera.y-32 and elem.rect.y <= self.camera.y+self.h_ :
+                    elem.display(self.display_surf,self.camera)
+
     def display(self):
-        for tile in self.world.tiles :
-            if tile.rect.x >= self.camera.x-32 and tile.rect.x <= self.camera.x+self.w_ :
-                if tile.rect.y >= self.camera.y-32 and tile.rect.y <= self.camera.y+self.h_ :
-                    tile.display(self.display_surf,self.camera)
-        for flower in self.world.flowers :
-            flower.display(self.display_surf,self.camera)
-        for animal in self.world.animals :
-            animal.display(self.display_surf,self.camera)
+        self.displayOnlyScreen(self.world.tiles)
+        self.displayOnlyScreen(self.world.objects)
+        self.displayOnlyScreen(self.world.animals)
+
         self.player.display(self.display_surf,self.camera)
 
     def updateCamera(self):

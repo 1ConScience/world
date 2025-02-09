@@ -1,6 +1,6 @@
 from Tile import *
 from Stag import *
-from Flower import *
+from Object import *
 import noise
 
 nb_tiles_x = 28
@@ -8,12 +8,9 @@ nb_tiles_y = 61
 
 class World:
     def __init__(self,game):
-        #TAB VALUESSSSSSSSSSS
-        self.table_possible_values = []
-
         self.game = game
 
-        self.flowers = []
+        self.objects = []
 
         self.animals = []
         self.add_animals()
@@ -30,16 +27,23 @@ class World:
             self.add_tiles(self.rightincognita,0,1,nb_tiles_y)
             self.rightincognita +=1
 
-        
         if self.game.player.pos.y > self.bottomincognita*8 - (nb_tiles_y/2)*8 :
             self.add_tiles(0,self.bottomincognita,nb_tiles_x,1)
             self.bottomincognita +=1
 
+        if self.game.player.pos.x < self.leftincognita*32 + (nb_tiles_x/2)*32 :
+            self.add_tiles(self.leftincognita,0,1,nb_tiles_y)
+            self.leftincognita -=1
+
+        if self.game.player.pos.y < self.topincognita*8 + (nb_tiles_y/2)*8 :
+            self.add_tiles(0,self.topincognita,nb_tiles_x,1)
+            self.topincognita -=1
+
     def add_tiles(self,start_x,start_y,range_x,range_y):
         end_x = start_x+range_x
         end_y = start_y+range_y
-        scale = 20
-        octaves = 3
+        scale = 13
+        octaves = 7
         lacunarity = 1.0
         persistence = 1.0
         for y in range (start_y,end_y,1):
@@ -56,12 +60,12 @@ class World:
                     luck = random.randint(0,2)
                     if luck == 0 :
                         self.add_flower(tile.rect)
+                elif tile.id_ == "028" :
+                    luck = random.randint(0,10)
+                    if luck == 0 :
+                        self.add_wood(tile.rect)
                 elif tile.id_ == "104" :
                     tile.add(self.game.water_group)
-
-                #TAB VALUESSSSSSSSSSS
-                if value not in self.table_possible_values:
-                    self.table_possible_values.append(value)
 
         self.tiles.sort(key=lambda x: x.zindex, reverse=False)
 
@@ -72,4 +76,8 @@ class World:
 
     def add_flower(self,pos):
         flower = Flower(pos)
-        self.flowers.append(flower)
+        self.objects.append(flower)
+
+    def add_wood(self,pos):
+        wood = Wood(pos)
+        self.objects.append(wood)

@@ -65,7 +65,7 @@ class Player(Entity):
         self.animate()
         
         if self.vel != vec(0,0):
-            pygame.math.Vector2.scale_to_length(self.vel, 1.5)
+            pygame.math.Vector2.scale_to_length(self.vel, 1.3)
 
         self.pos += self.vel
 
