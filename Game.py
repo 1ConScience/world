@@ -15,6 +15,10 @@ class Game:
         self.h_ = 360
         self.display_surf = pygame.Surface((self.w_, self.h_))
 
+        loading_txt = Text("LOADING",(255,255,255),40,(self.screen.get_width()/2, self.screen.get_height()/2))
+        loading_txt.display(self.screen)
+        pygame.display.flip()
+
         self.world = World(self)
 
         self.player = Player(self)
@@ -36,7 +40,9 @@ class Game:
             
             self.player.move()
 
-            self.world.update()
+            gnocchis = self.player.testNewSubworldkey()
+            if gnocchis != None :
+                self.world.updateActualSubworlds(gnocchis)
             
             self.updateCamera()
 

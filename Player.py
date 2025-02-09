@@ -42,11 +42,25 @@ class Player(Entity):
 
         self.last_dir = ""
 
-        self.actualsubworldkey = (0,0)
+        self.actualsubworld = (0,0)
 
     def testNewSubworldkey(self):
-        if self.pos.x > self.actualsubworldkey[0]*TILE_SIZE :
-            pass
+        newsubworldkey = None
+
+        if self.pos.x > self.actualsubworld[0]*TILE_SIZE + (TILES_WIDTH/2)*TILE_SIZE :
+            self.actualsubworld = (self.actualsubworld[0]+TILES_WIDTH,self.actualsubworld[1])
+            newsubworldkey = self.actualsubworld
+        if self.pos.x < self.actualsubworld[0]*TILE_SIZE - (TILES_WIDTH/2)*TILE_SIZE :
+            self.actualsubworld = (self.actualsubworld[0]-TILES_WIDTH,self.actualsubworld[1])
+            newsubworldkey = self.actualsubworld
+        if self.pos.y > self.actualsubworld[1]*TILE_SIZE/4 + (TILES_HEIGHT/2)*(TILE_SIZE/4) :
+            self.actualsubworld = (self.actualsubworld[0],self.actualsubworld[1]+TILES_HEIGHT)
+            newsubworldkey = self.actualsubworld
+        if self.pos.y < self.actualsubworld[1]*TILE_SIZE/4 - (TILES_HEIGHT/2)*(TILE_SIZE/4) :
+            self.actualsubworld = (self.actualsubworld[0],self.actualsubworld[1]-TILES_HEIGHT)
+            newsubworldkey = self.actualsubworld
+
+        return newsubworldkey
 
     def checkCollide(self):
         collide = pygame.sprite.spritecollide(self, self.game.world.actualwater_group, False, collided = pygame.sprite.collide_mask)
