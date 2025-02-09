@@ -68,7 +68,7 @@ class SubWorld:
         self.objects = []
         self.animals = []
         self.tiles = []
-        self.add_elements(self.centerx-round(TILES_WIDTH/2),self.centery-round(TILES_HEIGHT/2))
+        self.add_elements(self.centerx-round(TILES_WIDTH2),self.centery-round(TILES_HEIGHT2))
 
     def add_elements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH
@@ -82,9 +82,9 @@ class SubWorld:
                 value = noise.pnoise2(x/scale,y/scale,octaves=octaves,persistence=persistence,lacunarity=lacunarity,repeatx=end_x,repeaty=end_y,base=0)
                 tile = None
                 if y%2 == 0:
-                    tile = Tile((x*TILE_SIZE,y*TILE_SIZE/4),value,y)
+                    tile = Tile((x*TILE_SIZE,y*TILE_SIZE4),value,y)
                 else :
-                    tile = Tile((x*TILE_SIZE+TILE_SIZE/2,y*TILE_SIZE/4),value,y)
+                    tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),value,y)
                 self.tiles.append(tile)
                 
                 if tile.id_ == "040" :
@@ -102,7 +102,7 @@ class SubWorld:
                     
                 luck = random.randint(0,200)
                 if luck == 0 :
-                    self.add_animals((x*TILE_SIZE,y*TILE_SIZE/4))
+                    self.add_animals((x*TILE_SIZE,y*TILE_SIZE4))
 
     def add_animals(self,pos):
         animal = Stag(pos)

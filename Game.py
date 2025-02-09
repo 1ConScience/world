@@ -44,7 +44,7 @@ class Game:
             if gnocchis != None :
                 self.world.updateActualSubworlds(gnocchis)
             
-            self.updateCamera()
+            self.updateCameraCenterSmooth()
 
             self.display()
 
@@ -75,7 +75,7 @@ class Game:
 
         self.player.display(self.display_surf,self.camera)
 
-    def updateCamera(self):
+    def updateCameraCenterSmooth(self):
             self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
 
             self.camera_aim.x = round(self.camera_aim.x)
@@ -89,5 +89,11 @@ class Game:
                 self.camera.y += 1
             if self.camera_aim.y < self.camera.y :
                 self.camera.y -= 1
+
+    def updateCameraCenter(self):
+            self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
+
+            self.camera.x = round(self.camera_aim.x)
+            self.camera.y = round(self.camera_aim.y)
 
 game = Game().run()
