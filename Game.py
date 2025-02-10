@@ -67,14 +67,12 @@ class Game:
                 if elem.rect.y >= self.camera.y-TILE_SIZE and elem.rect.y <= self.camera.y+self.h_ :
                     elem.display(self.display_surf,self.camera)
 
-                    if self.player.zindex >= elem.zindex :
-                        self.player.display(self.display_surf,self.camera)
-
     def display(self):
         self.displayOnlyScreen(self.world.actualtiles)
         for cle, subworld in self.world.actualsubworlds.items():
             self.displayOnlyScreen(subworld.objects)
             self.displayOnlyScreen(subworld.animals)
+        self.player.display(self.display_surf,self.camera)
 
     def updateCameraCenterSmooth(self):
             self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
