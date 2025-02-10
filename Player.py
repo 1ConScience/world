@@ -62,8 +62,8 @@ class Player(Entity):
 
         return newsubworldkey
 
-    def checkCollide(self):
-        collide = pygame.sprite.spritecollide(self, self.game.world.actualwater_group, False, collided = pygame.sprite.collide_mask)
+    def checkCollide(self,group):
+        collide = pygame.sprite.spritecollide(self, group, False, collided = pygame.sprite.collide_mask)
         if collide :
             return True
         return False
@@ -90,8 +90,12 @@ class Player(Entity):
 
         self.rect.midbottom = self.pos 
             
-        if self.checkCollide():
+        if self.checkCollide(self.game.world.actualwater_group):
             self.pos -= self.vel*0.5
+            self.rect.midbottom = self.pos 
+            
+        if self.checkCollide(self.game.world.actualcollide_group):
+            self.pos -= self.vel
             self.rect.midbottom = self.pos 
 
         self.updateZindex()

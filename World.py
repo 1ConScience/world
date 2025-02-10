@@ -14,6 +14,7 @@ class World:
         self.actualsubworlds = {}
         self.actualtiles = []
         self.actualwater_group = pygame.sprite.Group()
+        self.actualcollide_group = pygame.sprite.Group()
 
         for y in range (-1,2,1):
             for x in range(-1,2,1):
@@ -27,12 +28,19 @@ class World:
     def updateActualTilesAndWaterGroup(self):
         self.actualtiles.clear()
         self.actualwater_group.empty()
+        self.actualcollide_group.empty()
 
         for cle, subworld in self.actualsubworlds.items():
             for tile in subworld.tiles:
                 self.actualtiles.append(tile)
+
                 if tile.id_ == "104" :
                     tile.add(self.actualwater_group)
+
+            for object in subworld.objects:
+                object.add(self.actualcollide_group)
+            for animal in subworld.animals:
+                animal.add(self.actualcollide_group)
 
         self.actualtiles.sort(key=lambda x: x.zindex, reverse=False)
 
