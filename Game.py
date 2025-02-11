@@ -44,8 +44,7 @@ class Game:
             if gnocchis != None :
                 self.world.updateActualSubworlds(gnocchis)
 
-            for inoffensiveanimal in self.world.actualsubworlds[str(self.player.actualsubworld[0])+";"+str(self.player.actualsubworld[1])].inoffensiveanimals:
-                inoffensiveanimal.move()
+            self.moveAnimals()
             
             self.updateCameraCenterSmooth()
 
@@ -63,6 +62,10 @@ class Game:
             self.clock.tick(60)
 
         pygame.quit()
+
+    def moveAnimals(self):
+        for inoffensiveanimal in self.world.actualsubworlds[str(self.player.actualsubworld[0])+";"+str(self.player.actualsubworld[1])].inoffensiveanimals:
+            inoffensiveanimal.move()
 
     def displayOnlyScreen(self,list):
         for elem in list :

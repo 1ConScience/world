@@ -45,8 +45,8 @@ class Animal(Entity):
         self.vel = vec(0,0)
 
 
-        self.vel.x = random.randint(-1,1)
-        self.vel.y = random.randint(-1,1)
+        self.vel.x = -1
+        self.vel.y = -1
         
         if self.vel != vec(0,0):
             pygame.math.Vector2.scale_to_length(self.vel, VELOCITY_ANIMAL)
