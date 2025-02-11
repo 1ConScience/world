@@ -64,8 +64,10 @@ class Game:
         pygame.quit()
 
     def moveAnimals(self):
-        for inoffensiveanimal in self.world.actualsubworlds[str(self.player.actualsubworld[0])+";"+str(self.player.actualsubworld[1])].inoffensiveanimals:
-            inoffensiveanimal.move()
+        for inoffensiveanimal in self.world.actualinoffensiveanimal_group:
+            if inoffensiveanimal.rect.x >= self.camera.x-TILE_SIZE and inoffensiveanimal.rect.x <= self.camera.x+self.w_ :
+                if inoffensiveanimal.rect.y >= self.camera.y-TILE_SIZE and inoffensiveanimal.rect.y <= self.camera.y+self.h_ :
+                    inoffensiveanimal.move()
 
     def displayOnlyScreen(self,list):
         for elem in list :
