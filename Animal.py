@@ -38,15 +38,13 @@ class Animal(Entity):
         return False
 
     def move(self):
-        '''if self.current_frame == 0 :
-            possible_dir = [(0,0),(1,1),(1,-1),(-1,1),(-1,-1)]
+        if self.index_frame == 0 :
+            possible_dir = [(1,1),(1,-1),(-1,1),(-1,-1)]
             
-            self.vel = vec(random.choice(possible_dir))'''
-        self.vel = vec(0,0)
+            self.vel = vec(random.choice(possible_dir))
 
-
-        self.vel.x = -1
-        self.vel.y = -1
+        '''self.vel.x = -1
+        self.vel.y = -1'''
         
         if self.vel != vec(0,0):
             pygame.math.Vector2.scale_to_length(self.vel, VELOCITY_ANIMAL)
@@ -59,7 +57,7 @@ class Animal(Entity):
             self.pos -= self.vel*0.5
             self.rect.midbottom = self.pos 
             
-        if self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) :
+        if self.checkCollide(self.game.world.actualrock_group) :
             self.pos -= self.vel
             self.rect.midbottom = self.pos
 
