@@ -67,6 +67,4 @@ class Animal(Entity):
             self.vel = vec(random.choice(possible_dir))
             self.change_dir_cpt = 0
 
-        self.updateZindex()
-
         gnocchis = self.testNewSubworldkey()

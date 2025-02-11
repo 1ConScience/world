@@ -6,10 +6,6 @@ class Entity(pygame.sprite.Sprite):
         super().__init__()  
         self.zindex = zindex
 
-    def updateZindex(self):
-        self.zindex = self.rect.bottom/TILE_SIZE4
-        print(self.zindex)
-
     def animate(self):
         pass
 
