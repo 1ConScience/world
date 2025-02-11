@@ -22,6 +22,8 @@ class Game:
         self.world = World(self)
 
         self.player = Player(self)
+        self.player_group = pygame.sprite.Group()
+        self.player.add(self.player_group)
 
         self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
         self.camera = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
