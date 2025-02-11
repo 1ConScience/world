@@ -6,8 +6,6 @@ from Animal import *
 class Player(Animal):
     def __init__(self,game):
         super().__init__(game) 
-
-        self.actualsubworld = (0,0)
         
         self.idle_right_up_sheet = pygame.image.load("assets/character/Idle/idle_right_up.png").convert_alpha()
         self.idle_up_sheet = pygame.image.load("assets/character/Idle/idle_up.png").convert_alpha()
@@ -37,24 +35,6 @@ class Player(Animal):
         self.index_frame = 0 #that keeps track on the current index of the image list.
         self.current_frame = 0 #that keeps track on the current time or current frame since last the index switched.
         self.animation_frames = 8 #that define how many seconds or frames should pass before switching image.
-
-    def testNewSubworldkey(self):
-        newsubworldkey = None
-
-        if self.pos.x > self.actualsubworld[0]*TILE_SIZE + (TILES_WIDTH2)*TILE_SIZE :
-            self.actualsubworld = (self.actualsubworld[0]+TILES_WIDTH,self.actualsubworld[1])
-            newsubworldkey = self.actualsubworld
-        if self.pos.x < self.actualsubworld[0]*TILE_SIZE - (TILES_WIDTH2)*TILE_SIZE :
-            self.actualsubworld = (self.actualsubworld[0]-TILES_WIDTH,self.actualsubworld[1])
-            newsubworldkey = self.actualsubworld
-        if self.pos.y > self.actualsubworld[1]*TILE_SIZE4 + (TILES_HEIGHT2)*(TILE_SIZE4) :
-            self.actualsubworld = (self.actualsubworld[0],self.actualsubworld[1]+TILES_HEIGHT)
-            newsubworldkey = self.actualsubworld
-        if self.pos.y < self.actualsubworld[1]*TILE_SIZE4 - (TILES_HEIGHT2)*(TILE_SIZE4) :
-            self.actualsubworld = (self.actualsubworld[0],self.actualsubworld[1]-TILES_HEIGHT)
-            newsubworldkey = self.actualsubworld
-
-        return newsubworldkey
 
     def move(self):
         self.vel = vec(0,0)

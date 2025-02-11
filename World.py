@@ -133,7 +133,7 @@ class SubWorld:
                             self.add_inoffensiveanimals((x*TILE_SIZE,y*TILE_SIZE4))
 
     def add_inoffensiveanimals(self,pos):
-        inoffensiveanimal = Stag(pos,self.game)
+        inoffensiveanimal = Stag(pos,self.game,self.centerx,self.centery)
         self.inoffensiveanimals.append(inoffensiveanimal)
 
     def add_flower(self,pos):
