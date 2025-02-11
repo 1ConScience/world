@@ -12,6 +12,8 @@ class Animal(Entity):
         
         list_dir = ["right_up","right_down","left_up","left_down"]
         self.last_dir = random.choice(list_dir)
+        self.change_dir_cpt = 0
+        self.change_dir_limit = random.randint(20,60)
 
     def testNewSubworldkey(self):
         newsubworldkey = None
@@ -38,10 +40,15 @@ class Animal(Entity):
         return False
 
     def move(self):
-        if self.index_frame == 0 :
+        
+        self.change_dir_cpt += 1
+        self.change_dir_limit = random.randint(20,60)
+        if self.change_dir_cpt == self.change_dir_limit :
             possible_dir = [(1,1),(1,-1),(-1,1),(-1,-1)]
-            
             self.vel = vec(random.choice(possible_dir))
+            self.change_dir_cpt = 0
+            
+
 
         '''self.vel.x = -1
         self.vel.y = -1'''
