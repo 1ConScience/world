@@ -41,7 +41,7 @@ class Stag(Animal):
     def control(self):
         if self.current_frame == 0 :
             possible_dir = [(0,0),(1,1),(1,-1),(-1,1),(-1,-1)]
-            self.vel = random.choice(possible_dir)
+            self.vel = vec(random.choice(possible_dir))
             self.running = random.choice([True,False])
 
     def animate(self):

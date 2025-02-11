@@ -43,6 +43,9 @@ class Game:
             gnocchis = self.player.testNewSubworldkey()
             if gnocchis != None :
                 self.world.updateActualSubworlds(gnocchis)
+
+            for animal in self.world.actualsubworlds[str(self.player.actualsubworld[0])+";"+str(self.player.actualsubworld[1])].animals:
+                animal.move()
             
             self.updateCameraCenterSmooth()
 
