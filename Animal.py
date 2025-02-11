@@ -47,11 +47,6 @@ class Animal(Entity):
             possible_dir = [(1,1),(1,-1),(-1,1),(-1,-1)]
             self.vel = vec(random.choice(possible_dir))
             self.change_dir_cpt = 0
-            
-
-
-        '''self.vel.x = -1
-        self.vel.y = -1'''
         
         if self.vel != vec(0,0):
             pygame.math.Vector2.scale_to_length(self.vel, VELOCITY_ANIMAL)
@@ -67,6 +62,10 @@ class Animal(Entity):
         if self.checkCollide(self.game.world.actualrock_group) :
             self.pos -= self.vel
             self.rect.midbottom = self.pos
+            
+            possible_dir = [(1,1),(1,-1),(-1,1),(-1,-1)]
+            self.vel = vec(random.choice(possible_dir))
+            self.change_dir_cpt = 0
 
         self.updateZindex()
 
