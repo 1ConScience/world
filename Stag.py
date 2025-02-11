@@ -38,6 +38,12 @@ class Stag(Animal):
 
         self.running = False
 
+    def control(self):
+        if self.current_frame == 0 :
+            possible_dir = [(0,0),(1,1),(1,-1),(-1,1),(-1,-1)]
+            self.vel = random.choice(possible_dir)
+            self.running = random.choice([True,False])
+
     def animate(self):
         if self.vel == vec(0,0):
             self.idleAnimation()
@@ -62,30 +68,32 @@ class Stag(Animal):
                 self.index_frame_idle = 0
 
     def RunWalkAnimation(self):
-        if self.vel.x > 0 and self.vel.y < 0:
-            self.surf = self.walk_right_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
-            self.last_dir = "right_up"
-        elif self.vel.x < 0 and self.vel.y < 0:
-            self.surf = self.walk_left_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
-            self.last_dir = "left_up"
-        elif self.vel.x < 0 and self.vel.y > 0:
-            self.surf = self.walk_left_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
-            self.last_dir = "left_down"
-        elif self.vel.x > 0 and self.vel.y > 0:
-            self.surf = self.walk_right_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
-            self.last_dir = "right_down"
-        elif self.running and self.vel.x > 0 and self.vel.y < 0:
-            self.surf = self.run_right_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
-            self.last_dir = "right_up"
-        elif self.running and self.vel.x < 0 and self.vel.y < 0:
-            self.surf = self.run_left_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
-            self.last_dir = "left_up"
-        elif self.running and self.vel.x < 0 and self.vel.y > 0:
-            self.surf = self.run_left_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
-            self.last_dir = "left_down"
-        elif self.running and self.vel.x > 0 and self.vel.y > 0:
-            self.surf = self.run_right_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
-            self.last_dir = "right_down"
+        if self.running :
+            if self.vel.x > 0 and self.vel.y < 0:
+                self.surf = self.run_right_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.last_dir = "right_up"
+            elif self.vel.x < 0 and self.vel.y < 0:
+                self.surf = self.run_left_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.last_dir = "left_up"
+            elif self.vel.x < 0 and self.vel.y > 0:
+                self.surf = self.run_left_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.last_dir = "left_down"
+            elif self.vel.x > 0 and self.vel.y > 0:
+                self.surf = self.run_right_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.last_dir = "right_down"
+        else :
+            if self.vel.x > 0 and self.vel.y < 0:
+                self.surf = self.walk_right_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.last_dir = "right_up"
+            elif self.vel.x < 0 and self.vel.y < 0:
+                self.surf = self.walk_left_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.last_dir = "left_up"
+            elif self.vel.x < 0 and self.vel.y > 0:
+                self.surf = self.walk_left_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.last_dir = "left_down"
+            elif self.vel.x > 0 and self.vel.y > 0:
+                self.surf = self.walk_right_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.last_dir = "right_down"
 
         self.current_frame += 1
         if self.current_frame >= self.animation_frames:
