@@ -44,8 +44,8 @@ class Game:
             if gnocchis != None :
                 self.world.updateActualSubworlds(gnocchis)
 
-            for animal in self.world.actualsubworlds[str(self.player.actualsubworld[0])+";"+str(self.player.actualsubworld[1])].animals:
-                animal.move()
+            for inoffensiveanimal in self.world.actualsubworlds[str(self.player.actualsubworld[0])+";"+str(self.player.actualsubworld[1])].inoffensiveanimals:
+                inoffensiveanimal.move()
             
             self.updateCameraCenterSmooth()
 
@@ -73,8 +73,10 @@ class Game:
     def display(self):
         self.displayOnlyScreen(self.world.actualtiles)
         for cle, subworld in self.world.actualsubworlds.items():
-            self.displayOnlyScreen(subworld.objects)
-            self.displayOnlyScreen(subworld.animals)
+            self.displayOnlyScreen(subworld.flowers)
+            self.displayOnlyScreen(subworld.woods)
+            self.displayOnlyScreen(subworld.rocks)
+            self.displayOnlyScreen(subworld.inoffensiveanimals)
         self.player.display(self.display_surf,self.camera)
 
     def updateCameraCenterSmooth(self):

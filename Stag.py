@@ -38,11 +38,6 @@ class Stag(Animal):
 
         self.running = False
 
-    def control(self):
-        if self.current_frame == 0 :
-            possible_dir = [(0,0),(1,1),(1,-1),(-1,1),(-1,-1)]
-            self.vel = vec(random.choice(possible_dir))
-
     def animate(self):
         if self.vel == vec(0,0):
             self.idleAnimation()

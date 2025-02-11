@@ -56,9 +56,9 @@ class Player(Animal):
 
         return newsubworldkey
 
-    def control(self):
+    def move(self):
         self.vel = vec(0,0)
-        
+
         pressed_keys = pygame.key.get_pressed()            
         if pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]:
             self.vel.x = -1
@@ -68,6 +68,23 @@ class Player(Animal):
             self.vel.y = -1
         if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
             self.vel.y = 1
+        
+        if self.vel != vec(0,0):
+            pygame.math.Vector2.scale_to_length(self.vel, VELOCITY)
+
+        self.pos += self.vel
+
+        self.rect.midbottom = self.pos 
+            
+        if self.checkCollide(self.game.world.actualwater_group):
+            self.pos -= self.vel*0.5
+            self.rect.midbottom = self.pos 
+            
+        if self.checkCollide(self.game.world.actualinoffensiveanimal_group) or self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) :
+            self.pos -= self.vel
+            self.rect.midbottom = self.pos 
+
+        self.updateZindex()
 
     def animate(self):
         if self.vel.x == 0 and self.vel.y == 0:

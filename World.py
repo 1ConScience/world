@@ -12,10 +12,18 @@ class World:
         self.subworlds = {}
 
         self.actualsubworlds = {}
-        self.actualtiles = []
-        self.actualwater_group = pygame.sprite.Group()
-        self.actualcollide_group = pygame.sprite.Group()
 
+        self.actualtiles = []
+
+        self.actualwater_group = pygame.sprite.Group()
+        self.actualinoffensiveanimal_group = pygame.sprite.Group()
+        self.actualflower_group = pygame.sprite.Group()
+        self.actualrock_group = pygame.sprite.Group()
+        self.actualwood_group = pygame.sprite.Group()
+
+        self.genWorldStart()
+
+    def genWorldStart(self):
         for y in range (-1,2,1):
             for x in range(-1,2,1):
                 self.addSubWorld(x*TILES_WIDTH,y*TILES_HEIGHT)
@@ -27,21 +35,27 @@ class World:
 
     def updateActualTilesAndWaterGroup(self):
         self.actualtiles.clear()
+        
         self.actualwater_group.empty()
-        self.actualcollide_group.empty()
+        self.actualinoffensiveanimal_group.empty()
+        self.actualflower_group.empty()
+        self.actualrock_group.empty()
+        self.actualwood_group.empty()
 
         for cle, subworld in self.actualsubworlds.items():
             for tile in subworld.tiles:
                 self.actualtiles.append(tile)
-
                 if tile.id_ == "104" :
                     tile.add(self.actualwater_group)
 
-            for object in subworld.objects:
-                if type(object) is not Flower:
-                    object.add(self.actualcollide_group)
-            for animal in subworld.animals:
-                animal.add(self.actualcollide_group)
+            for inoffensiveanimal in subworld.inoffensiveanimals:
+                inoffensiveanimal.add(self.actualinoffensiveanimal_group)
+            for flower in subworld.flowers:
+                flower.add(self.actualflower_group)
+            for rock in subworld.rocks:
+                rock.add(self.actualrock_group)
+            for wood in subworld.woods:
+                wood.add(self.actualwood_group)
 
         self.actualtiles.sort(key=lambda x: x.zindex, reverse=False)
 
@@ -74,9 +88,13 @@ class SubWorld:
         self.centery = centery
 
 
-        self.objects = []
-        self.animals = []
+        self.flowers = []
+        self.rocks = []
+        self.woods = []
+        self.inoffensiveanimals = []
+
         self.tiles = []
+
         self.add_elements(self.centerx-round(TILES_WIDTH2),self.centery-round(TILES_HEIGHT2))
 
     def add_elements(self,start_x,start_y):
@@ -112,20 +130,20 @@ class SubWorld:
                     else :
                         luck = random.randint(0,300)
                         if luck == 0 :
-                            self.add_animals((x*TILE_SIZE,y*TILE_SIZE4))
+                            self.add_inoffensiveanimals((x*TILE_SIZE,y*TILE_SIZE4))
 
-    def add_animals(self,pos):
-        animal = Stag(pos,self.game)
-        self.animals.append(animal)
+    def add_inoffensiveanimals(self,pos):
+        inoffensiveanimal = Stag(pos,self.game)
+        self.inoffensiveanimals.append(inoffensiveanimal)
 
     def add_flower(self,pos):
         flower = Flower(pos)
-        self.objects.append(flower)
+        self.flowers.append(flower)
 
     def add_wood(self,pos):
         wood = Wood(pos)
-        self.objects.append(wood)
+        self.woods.append(wood)
 
     def add_rock(self,pos):
         rock = Rock(pos)
-        self.objects.append(rock)
+        self.rocks.append(rock)

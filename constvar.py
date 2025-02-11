@@ -12,3 +12,4 @@ TILE_SIZE4 = TILE_SIZE/4
 vec = pygame.math.Vector2 
 
 VELOCITY = 1.2
+VELOCITY_ANIMAL = 0.6
