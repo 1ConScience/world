@@ -38,7 +38,8 @@ class World:
                     tile.add(self.actualwater_group)
 
             for object in subworld.objects:
-                object.add(self.actualcollide_group)
+                if type(object) is not Flower:
+                    object.add(self.actualcollide_group)
             for animal in subworld.animals:
                 animal.add(self.actualcollide_group)
 

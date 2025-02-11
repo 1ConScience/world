@@ -35,3 +35,4 @@ class Rock(Object):
         id_str = "0"+str(id)
         
         super().__init__(rect,id_str) 
+        self.mask = pygame.mask.from_surface(pygame.image.load("assets/tiles/rock_mask.png").convert_alpha())
