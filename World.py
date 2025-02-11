@@ -108,10 +108,10 @@ class SubWorld:
                     luck = random.randint(0,10)
                     if luck == 0 :
                         self.add_rock(tile.rect)
-                    
-                luck = random.randint(0,200)
-                if luck == 0 :
-                    self.add_animals((x*TILE_SIZE,y*TILE_SIZE4))
+                else :
+                    luck = random.randint(0,300)
+                    if luck == 0 :
+                        self.add_animals((x*TILE_SIZE,y*TILE_SIZE4))
 
     def add_animals(self,pos):
         animal = Stag(pos,self.game)

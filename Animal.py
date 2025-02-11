@@ -9,7 +9,9 @@ class Animal(Entity):
         self.pos = vec(0,0)
         self.vel = vec(0,0)        
         
-        self.last_dir = "right_up"
+        list_dir = ["right_up","right_down","left_up","left_down"]
+        self.last_dir = random.choice(list_dir)
+        
         self.actualsubworld = (0,0)
 
     def testNewSubworldkey(self):
