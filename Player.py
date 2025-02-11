@@ -36,6 +36,17 @@ class Player(Animal):
         self.current_frame = 0 #that keeps track on the current time or current frame since last the index switched.
         self.animation_frames = 8 #that define how many seconds or frames should pass before switching image.
 
+    def control(self):
+        pressed_keys = pygame.key.get_pressed()            
+        if pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]:
+            self.vel.x = -1
+        if pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]:
+            self.vel.x = 1
+        if pressed_keys[pygame.K_z] or pressed_keys[pygame.K_UP]:
+            self.vel.y = -1
+        if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
+            self.vel.y = 1
+
     def animate(self):
         if self.vel.x == 0 and self.vel.y == 0:
             if self.last_dir == "right":
@@ -87,7 +98,7 @@ class Player(Animal):
                 self.index_frame = 0
 
     def display(self,surf,camera):
-        
+
         self.animate()
 
         surf.blit(self.shadow, (self.rect.x - camera.x, self.rect.y - camera.y))

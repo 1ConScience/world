@@ -96,22 +96,23 @@ class SubWorld:
                     tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),value,y)
                 self.tiles.append(tile)
                 
-                if tile.id_ == "040" :
-                    luck = random.randint(0,2)
-                    if luck == 0 :
-                        self.add_flower(tile.rect)
-                elif tile.id_ == "028" :
-                    luck = random.randint(0,10)
-                    if luck == 0 :
-                        self.add_wood(tile.rect)
-                elif tile.id_ == "063" :
-                    luck = random.randint(0,10)
-                    if luck == 0 :
-                        self.add_rock(tile.rect)
-                else :
-                    luck = random.randint(0,300)
-                    if luck == 0 :
-                        self.add_animals((x*TILE_SIZE,y*TILE_SIZE4))
+                if x!=0 and y!=0 :
+                    if tile.id_ == "040" :
+                        luck = random.randint(0,2)
+                        if luck == 0 :
+                            self.add_flower(tile.rect)
+                    elif tile.id_ == "028" :
+                        luck = random.randint(0,10)
+                        if luck == 0 :
+                            self.add_wood(tile.rect)
+                    elif tile.id_ == "063" :
+                        luck = random.randint(0,10)
+                        if luck == 0 :
+                            self.add_rock(tile.rect)
+                    else :
+                        luck = random.randint(0,300)
+                        if luck == 0 :
+                            self.add_animals((x*TILE_SIZE,y*TILE_SIZE4))
 
     def add_animals(self,pos):
         animal = Stag(pos,self.game)

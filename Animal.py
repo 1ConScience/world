@@ -11,7 +11,7 @@ class Animal(Entity):
         
         list_dir = ["right_up","right_down","left_up","left_down"]
         self.last_dir = random.choice(list_dir)
-        
+
         self.actualsubworld = (0,0)
 
     def testNewSubworldkey(self):
@@ -41,15 +41,7 @@ class Animal(Entity):
     def move(self):
         self.vel = vec(0,0)
 
-        pressed_keys = pygame.key.get_pressed()            
-        if pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]:
-            self.vel.x = -1
-        if pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]:
-            self.vel.x = 1
-        if pressed_keys[pygame.K_z] or pressed_keys[pygame.K_UP]:
-            self.vel.y = -1
-        if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
-            self.vel.y = 1
+        self.control()#toujours avoir du self control
         
         if self.vel != vec(0,0):
             pygame.math.Vector2.scale_to_length(self.vel, VELOCITY)
@@ -67,3 +59,6 @@ class Animal(Entity):
             self.rect.midbottom = self.pos 
 
         self.updateZindex()
+
+    def control(self):
+        pass
