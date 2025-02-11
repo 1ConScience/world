@@ -114,7 +114,7 @@ class SubWorld:
                     self.add_animals((x*TILE_SIZE,y*TILE_SIZE4))
 
     def add_animals(self,pos):
-        animal = Stag(pos)
+        animal = Stag(pos,self.game)
         self.animals.append(animal)
 
     def add_flower(self,pos):

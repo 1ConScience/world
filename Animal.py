@@ -1,31 +1,72 @@
 import pygame
 from Entity import *
+import random
 
 class Animal(Entity):
-    def __init__(self,name,frames,pos):
+    def __init__(self,game):
         super().__init__() 
+        self.game = game 
+        self.pos = vec(0,0)
+        self.vel = vec(0,0)        
+        
+        self.last_dir = ""
+        self.actualsubworld = (0,0)
 
-        self.sheet = pygame.image.load("assets/animals/"+name+"_NE_idle.png").convert_alpha()
+    def testNewSubworldkey(self):
+        newsubworldkey = None
 
-        self.w_frame = self.sheet.get_width() / frames
-        self.h_frame = self.sheet.get_height()
+        if self.pos.x > self.actualsubworld[0]*TILE_SIZE + (TILES_WIDTH2)*TILE_SIZE :
+            self.actualsubworld = (self.actualsubworld[0]+TILES_WIDTH,self.actualsubworld[1])
+            newsubworldkey = self.actualsubworld
+        if self.pos.x < self.actualsubworld[0]*TILE_SIZE - (TILES_WIDTH2)*TILE_SIZE :
+            self.actualsubworld = (self.actualsubworld[0]-TILES_WIDTH,self.actualsubworld[1])
+            newsubworldkey = self.actualsubworld
+        if self.pos.y > self.actualsubworld[1]*TILE_SIZE4 + (TILES_HEIGHT2)*(TILE_SIZE4) :
+            self.actualsubworld = (self.actualsubworld[0],self.actualsubworld[1]+TILES_HEIGHT)
+            newsubworldkey = self.actualsubworld
+        if self.pos.y < self.actualsubworld[1]*TILE_SIZE4 - (TILES_HEIGHT2)*(TILE_SIZE4) :
+            self.actualsubworld = (self.actualsubworld[0],self.actualsubworld[1]-TILES_HEIGHT)
+            newsubworldkey = self.actualsubworld
 
-        self.surf = self.sheet.subsurface((0,0,self.w_frame,self.h_frame))
-        self.rect = self.surf.get_rect(center = pos)
-        self.mask = pygame.mask.from_surface(self.surf)
+        return newsubworldkey
 
-        self.index_frame = 0 #that keeps track on the current index of the image list.
-        self.current_frame = 0 #that keeps track on the current time or current frame since last the index switched.
-        self.animation_frames = 8 #that define how many seconds or frames should pass before switching image.
+    def checkCollide(self,group):
+        collide = pygame.sprite.spritecollide(self, group, False, collided = pygame.sprite.collide_mask)
+        if collide :
+            return True
+        return False
 
-        self.frames_number = frames
+    def move(self):
+        self.vel = vec(0,0)
 
-    def animate(self):
-        self.surf = self.sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+        pressed_keys = pygame.key.get_pressed()            
+        if pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]:
+            self.vel.x = -1
+        if pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]:
+            self.vel.x = 1
+        if pressed_keys[pygame.K_z] or pressed_keys[pygame.K_UP]:
+            self.vel.y = -1
+        if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
+            self.vel.y = 1
 
-        self.current_frame += 1
-        if self.current_frame >= self.animation_frames:
-            self.current_frame = 0
-            self.index_frame += 1
-            if self.index_frame >= self.frames_number :
-                self.index_frame = 0
+        self.animate()
+        
+        if self.vel != vec(0,0):
+            pygame.math.Vector2.scale_to_length(self.vel, VELOCITY)
+
+        self.pos += self.vel
+
+        self.rect.midbottom = self.pos 
+            
+        if self.checkCollide(self.game.world.actualwater_group):
+            self.pos -= self.vel*0.5
+            self.rect.midbottom = self.pos 
+            
+        if self.checkCollide(self.game.world.actualcollide_group):
+            self.pos -= self.vel
+            self.rect.midbottom = self.pos 
+
+        self.updateZindex()
+
+    def display(self,surf,camera):
+        surf.blit(self.surf, (self.rect.x - camera.x, self.rect.y - camera.y))
