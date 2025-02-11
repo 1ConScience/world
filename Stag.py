@@ -39,7 +39,7 @@ class Stag(Animal):
         self.running = False
 
     def animate(self):
-        if self.vel.x == 0 and self.vel.y == 0:
+        if self.vel == vec(0,0):
             self.idleAnimation()
         else:
             self.RunWalkAnimation()

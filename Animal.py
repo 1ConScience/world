@@ -9,7 +9,7 @@ class Animal(Entity):
         self.pos = vec(0,0)
         self.vel = vec(0,0)        
         
-        self.last_dir = ""
+        self.last_dir = "right_up"
         self.actualsubworld = (0,0)
 
     def testNewSubworldkey(self):
@@ -48,8 +48,6 @@ class Animal(Entity):
             self.vel.y = -1
         if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
             self.vel.y = 1
-
-        self.animate()
         
         if self.vel != vec(0,0):
             pygame.math.Vector2.scale_to_length(self.vel, VELOCITY)
@@ -67,6 +65,3 @@ class Animal(Entity):
             self.rect.midbottom = self.pos 
 
         self.updateZindex()
-
-    def display(self,surf,camera):
-        surf.blit(self.surf, (self.rect.x - camera.x, self.rect.y - camera.y))
