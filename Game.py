@@ -5,7 +5,7 @@ from Util import *
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((1920, 1080), pygame.NOFRAME, vsync=1)
+        self.screen = pygame.display.set_mode((0, 0), pygame.NOFRAME, vsync=1)
         pygame.mouse.set_visible(False)
         pygame.display.set_caption("WORLD")
         self.clock = pygame.time.Clock()
