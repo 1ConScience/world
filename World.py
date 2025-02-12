@@ -132,16 +132,6 @@ class SubWorld:
                         luck = random.randint(0,300)
                         if luck == 0 :
                             self.add_inoffensiveanimals((x*TILE_SIZE,y*TILE_SIZE4))
-                '''else :
-                    for i in range(1,10,1):
-                        tile_bis = Tile((-TILE_SIZE*2,-TILE_SIZE4*i),value,y+1*i,"063")
-                        self.tiles.append(tile_bis)
-                    for i in range(1,10,1):
-                        tile_bis = Tile((TILE_SIZE*2,-TILE_SIZE4*i),value,y+1*i,"063")
-                        self.tiles.append(tile_bis)
-                    for i in range(-1,2,1):
-                        tile_bis = Tile((TILE_SIZE*i,-TILE_SIZE4*9),value,y+1*i,"063")
-                        self.tiles.append(tile_bis)'''
 
     def add_inoffensiveanimals(self,pos):
         inoffensiveanimal = None

@@ -24,7 +24,7 @@ class Tile(Entity):
 
         self.water = None
         if self.id_ == "104":
-            self.water = AnimatedObject("tiles/water_animation",6,8,pos)
+            self.water = AnimatedObject("tiles/water_animation",6,12,pos)
             self.surf = self.water.surf
 
     def getId(self,value):
@@ -60,3 +60,20 @@ class Tile(Entity):
         if self.id_ == "104":
             self.water.animate()
             self.surf = self.water.surf
+
+class Door():
+    def __init__(self):
+        self.tiles = []
+        for i in range(1,10,1):
+            tile_bis = Tile((-TILE_SIZE*2,-TILE_SIZE4*i),0,1*i,"063")
+            self.tiles.append(tile_bis)
+        for i in range(1,10,1):
+            tile_bis = Tile((TILE_SIZE*2,-TILE_SIZE4*i),0,1*i,"063")
+            self.tiles.append(tile_bis)
+        for i in range(-1,2,1):
+            tile_bis = Tile((TILE_SIZE*i,-TILE_SIZE4*9),0,1*i,"063")
+            self.tiles.append(tile_bis)
+
+    def display(self,surf,camera):
+        for tile in self.tiles:
+            tile.display(surf,camera)

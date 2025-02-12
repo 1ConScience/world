@@ -5,7 +5,7 @@ from Util import *
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((0, 0), pygame.NOFRAME, vsync=1)
+        self.screen = pygame.display.set_mode((1920, 1080), pygame.NOFRAME, vsync=1)
         pygame.mouse.set_visible(False)
         pygame.display.set_caption("WORLD")
         self.clock = pygame.time.Clock()
@@ -20,6 +20,8 @@ class Game:
         pygame.display.flip()
 
         self.world = World(self)
+
+        self.door = Door()
 
         self.player = Player(self)
         self.player_group = pygame.sprite.Group()
@@ -86,6 +88,8 @@ class Game:
         self.displayOnlyScreen(self.world.actualinoffensiveanimal_group)
 
         self.player.display(self.display_surf,self.camera)
+
+        self.door.display(self.display_surf,self.camera)
 
     def updateCameraCenterSmooth(self):
             self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
