@@ -15,23 +15,19 @@ class Animal(Entity):
         self.change_dir_cpt = 0
         self.change_dir_limit = random.randint(20,60)
 
-    def testNewSubworldkey(self):
-        newsubworldkey = None
+    def reachBorders(self):
+        reachBorders = False
 
         if self.pos.x > self.actualsubworld[0]*TILE_SIZE + (TILES_WIDTH2)*TILE_SIZE :
-            self.actualsubworld = (self.actualsubworld[0]+TILES_WIDTH,self.actualsubworld[1])
-            newsubworldkey = self.actualsubworld
+            reachBorders = True
         if self.pos.x < self.actualsubworld[0]*TILE_SIZE - (TILES_WIDTH2)*TILE_SIZE :
-            self.actualsubworld = (self.actualsubworld[0]-TILES_WIDTH,self.actualsubworld[1])
-            newsubworldkey = self.actualsubworld
+            reachBorders = True
         if self.pos.y > self.actualsubworld[1]*TILE_SIZE4 + (TILES_HEIGHT2)*(TILE_SIZE4) :
-            self.actualsubworld = (self.actualsubworld[0],self.actualsubworld[1]+TILES_HEIGHT)
-            newsubworldkey = self.actualsubworld
+            reachBorders = True
         if self.pos.y < self.actualsubworld[1]*TILE_SIZE4 - (TILES_HEIGHT2)*(TILE_SIZE4) :
-            self.actualsubworld = (self.actualsubworld[0],self.actualsubworld[1]-TILES_HEIGHT)
-            newsubworldkey = self.actualsubworld
+            reachBorders = True
 
-        return newsubworldkey
+        return reachBorders
 
     def checkCollide(self,group):
         collide = pygame.sprite.spritecollide(self, group, False, collided = pygame.sprite.collide_mask)
@@ -59,12 +55,10 @@ class Animal(Entity):
             self.pos -= self.vel*0.5
             self.rect.midbottom = self.pos 
             
-        if self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) or self.checkCollide(self.game.player_group) :
+        if self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) or self.checkCollide(self.game.player_group) or self.reachBorders() :
             self.pos -= self.vel
             self.rect.midbottom = self.pos
 
             possible_dir = [(1,1),(1,-1),(-1,1),(-1,-1)]
             self.vel = vec(random.choice(possible_dir))
             self.change_dir_cpt = 0
-
-        gnocchis = self.testNewSubworldkey()

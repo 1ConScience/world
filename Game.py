@@ -79,11 +79,12 @@ class Game:
 
     def display(self):
         self.displayOnlyScreen(self.world.actualtiles)
-        for cle, subworld in self.world.actualsubworlds.items():
-            self.displayOnlyScreen(subworld.flowers)
-            self.displayOnlyScreen(subworld.woods)
-            self.displayOnlyScreen(subworld.rocks)
-            self.displayOnlyScreen(subworld.inoffensiveanimals)
+
+        self.displayOnlyScreen(self.world.actualflower_group)
+        self.displayOnlyScreen(self.world.actualwood_group)
+        self.displayOnlyScreen(self.world.actualrock_group)
+        self.displayOnlyScreen(self.world.actualinoffensiveanimal_group)
+
         self.player.display(self.display_surf,self.camera)
 
     def updateCameraCenterSmooth(self):
