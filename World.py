@@ -1,5 +1,6 @@
 from Tile import *
 from Stag import *
+from Badger import *
 from Object import *
 import noise
 from constvar import *
@@ -131,9 +132,18 @@ class SubWorld:
                         luck = random.randint(0,300)
                         if luck == 0 :
                             self.add_inoffensiveanimals((x*TILE_SIZE,y*TILE_SIZE4))
+                else :
+                    for i in range(1,5,1):
+                        tile_bis = Tile((-TILE_SIZE,-TILE_SIZE4*i),value,y+1*i,"063")
+                        self.tiles.append(tile_bis)
 
     def add_inoffensiveanimals(self,pos):
-        inoffensiveanimal = Stag(pos,self.game,self.centerx,self.centery)
+        inoffensiveanimal = None
+        luck = random.randint(0,1)
+        if luck == 0 :
+            inoffensiveanimal = Badger(pos,self.game,self.centerx,self.centery)
+        else :
+            inoffensiveanimal = Stag(pos,self.game,self.centerx,self.centery)
         self.inoffensiveanimals.append(inoffensiveanimal)
 
     def add_flower(self,pos):

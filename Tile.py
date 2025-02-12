@@ -4,10 +4,13 @@ from Util import *
 from Entity import *
 
 class Tile(Entity):
-    def __init__(self,pos,value,zindex):
+    def __init__(self,pos,value,zindex,specific_id = None):
         super().__init__(zindex) 
         
-        self.id_ = self.getId(value)
+        if specific_id != None :
+            self.id_ = specific_id
+        else :
+            self.id_ = self.getId(value)
 
         '''value +=1
         value *=128
