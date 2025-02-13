@@ -2,7 +2,9 @@ from Animal import *
 
 class Stag(Animal):
     def __init__(self,pos,game,centerx,centery):
-        super().__init__(game)  
+        super().__init__(game) 
+
+        self.type = "Stag" 
         
         self.actualsubworld = (centerx,centery)
 

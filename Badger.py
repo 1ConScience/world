@@ -3,6 +3,8 @@ from Animal import *
 class Badger(Animal):
     def __init__(self,pos,game,centerx,centery):
         super().__init__(game)  
+
+        self.type = "Badger"
         
         self.actualsubworld = (centerx,centery)
 

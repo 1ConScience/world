@@ -5,6 +5,9 @@ import random
 class Animal(Entity):
     def __init__(self,game):
         super().__init__() 
+
+        self.type = "Animal"
+
         self.actualsubworld = (0,0)
         self.game = game 
         self.pos = vec(0,0)
@@ -40,12 +43,15 @@ class Animal(Entity):
         self.change_dir_cpt += 1
         self.change_dir_limit = random.randint(20,60)
         if self.change_dir_cpt == self.change_dir_limit :
-            possible_dir = [(1,1),(1,-1),(-1,1),(-1,-1)]
+            possible_dir = [(2,1),(2,-1),(-2,1),(-2,-1)]
             self.vel = vec(random.choice(possible_dir))
             self.change_dir_cpt = 0
         
         if self.vel != vec(0,0):
-            pygame.math.Vector2.scale_to_length(self.vel, VELOCITY_ANIMAL)
+            if self.type == "Wolf":
+                pygame.math.Vector2.scale_to_length(self.vel, VELOCITY_ANIMAL_RUN)
+            else :
+                pygame.math.Vector2.scale_to_length(self.vel, VELOCITY_ANIMAL)
 
         self.pos += self.vel
 

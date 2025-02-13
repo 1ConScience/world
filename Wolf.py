@@ -3,19 +3,21 @@ from Animal import *
 class Wolf(Animal):
     def __init__(self,pos,game,centerx,centery):
         super().__init__(game)  
+
+        self.type = "Wolf"
         
         self.actualsubworld = (centerx,centery)
 
         self.idle_sheet = pygame.image.load("assets/animals/wolf/wolf-idle.png").convert_alpha()
         pre_h_frame = self.idle_sheet.get_height()/4
         self.idle_left_down_sheet = self.idle_sheet.subsurface((0,0,self.idle_sheet.get_width(),pre_h_frame))
-        self.idle_right_down_shee = self.idle_sheet.subsurface((0,pre_h_frame,self.idle_sheet.get_width(),pre_h_frame))
+        self.idle_right_down_sheet = self.idle_sheet.subsurface((0,pre_h_frame,self.idle_sheet.get_width(),pre_h_frame))
         self.idle_left_up_sheet = self.idle_sheet.subsurface((0,pre_h_frame*2,self.idle_sheet.get_width(),pre_h_frame))
         self.idle_right_up_sheet = self.idle_sheet.subsurface((0,pre_h_frame*3,self.idle_sheet.get_width(),pre_h_frame))
         
         self.run_sheet = pygame.image.load("assets/animals/wolf/wolf-run.png").convert_alpha()
         self.run_left_down_sheet = self.run_sheet.subsurface((0,0,self.run_sheet.get_width(),pre_h_frame))
-        self.run_right_down_shee = self.run_sheet.subsurface((0,pre_h_frame,self.run_sheet.get_width(),pre_h_frame))
+        self.run_right_down_sheet = self.run_sheet.subsurface((0,pre_h_frame,self.run_sheet.get_width(),pre_h_frame))
         self.run_left_up_sheet = self.run_sheet.subsurface((0,pre_h_frame*2,self.run_sheet.get_width(),pre_h_frame))
         self.run_right_up_sheet = self.run_sheet.subsurface((0,pre_h_frame*3,self.run_sheet.get_width(),pre_h_frame))
         
