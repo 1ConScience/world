@@ -63,6 +63,8 @@ class Tile(Entity):
 
 class Door():
     def __init__(self,centerx,centery):
+        centerx*=TILE_SIZE
+        centery*=TILE_SIZE4
         self.tiles = []
         for i in range(1,10,1):
             tile_bis = Tile((-TILE_SIZE*2+centerx,-TILE_SIZE4*i+centery),0,1*i,"063")
