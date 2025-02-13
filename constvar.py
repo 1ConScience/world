@@ -13,3 +13,4 @@ vec = pygame.math.Vector2
 
 VELOCITY = 1.3
 VELOCITY_ANIMAL = 0.6
+VELOCITY_ANIMAL_RUN = 1.2

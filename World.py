@@ -1,6 +1,7 @@
 from Tile import *
 from Stag import *
 from Badger import *
+from Wolf import *
 from Object import *
 import noise
 from constvar import *
@@ -137,9 +138,11 @@ class SubWorld:
 
     def add_inoffensiveanimals(self,pos):
         inoffensiveanimal = None
-        luck = random.randint(0,1)
+        luck = random.randint(0,2)
         if luck == 0 :
             inoffensiveanimal = Badger(pos,self.game,self.centerx,self.centery)
+        elif luck == 1 :
+            inoffensiveanimal = Wolf(pos,self.game,self.centerx,self.centery)
         else :
             inoffensiveanimal = Stag(pos,self.game,self.centerx,self.centery)
         self.inoffensiveanimals.append(inoffensiveanimal)
