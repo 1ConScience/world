@@ -98,6 +98,8 @@ class SubWorld:
 
         self.add_elements(self.centerx-round(TILES_WIDTH2),self.centery-round(TILES_HEIGHT2))
 
+        self.door = Door(centerx,centery)
+
     def add_elements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH
         end_y = start_y+TILES_HEIGHT

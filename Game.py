@@ -21,8 +21,6 @@ class Game:
 
         self.world = World(self)
 
-        self.door = Door()
-
         self.player = Player(self)
         self.player_group = pygame.sprite.Group()
         self.player.add(self.player_group)
@@ -89,7 +87,8 @@ class Game:
 
         self.player.display(self.display_surf,self.camera)
 
-        self.door.display(self.display_surf,self.camera)
+        for cle, subworld in self.world.actualsubworlds.items():
+            subworld.door.display(self.display_surf,self.camera)
 
     def updateCameraCenterSmooth(self):
             self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)

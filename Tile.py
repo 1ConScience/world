@@ -62,16 +62,16 @@ class Tile(Entity):
             self.surf = self.water.surf
 
 class Door():
-    def __init__(self):
+    def __init__(self,centerx,centery):
         self.tiles = []
         for i in range(1,10,1):
-            tile_bis = Tile((-TILE_SIZE*2,-TILE_SIZE4*i),0,1*i,"063")
+            tile_bis = Tile((-TILE_SIZE*2+centerx,-TILE_SIZE4*i+centery),0,1*i,"063")
             self.tiles.append(tile_bis)
         for i in range(1,10,1):
-            tile_bis = Tile((TILE_SIZE*2,-TILE_SIZE4*i),0,1*i,"063")
+            tile_bis = Tile((TILE_SIZE*2+centerx,-TILE_SIZE4*i+centery),0,1*i,"063")
             self.tiles.append(tile_bis)
         for i in range(-1,2,1):
-            tile_bis = Tile((TILE_SIZE*i,-TILE_SIZE4*9),0,1*i,"063")
+            tile_bis = Tile((TILE_SIZE*i+centerx,-TILE_SIZE4*9+centery),0,1*i,"063")
             self.tiles.append(tile_bis)
 
     def display(self,surf,camera):
