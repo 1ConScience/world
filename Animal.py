@@ -55,15 +55,15 @@ class Animal(Entity):
 
         self.pos += self.vel
 
-        self.rect.midbottom = self.pos 
+        self.rect.center = self.pos 
             
         if self.checkCollide(self.game.world.actualwater_group):
             self.pos -= self.vel*0.5
-            self.rect.midbottom = self.pos 
+            self.rect.center = self.pos 
             
         if self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) or self.checkCollide(self.game.player_group) or self.reachBorders() :
             self.pos -= self.vel
-            self.rect.midbottom = self.pos
+            self.rect.center = self.pos
 
             possible_dir = [(1,1),(1,-1),(-1,1),(-1,-1)]
             self.vel = vec(random.choice(possible_dir))
