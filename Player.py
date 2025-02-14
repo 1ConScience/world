@@ -6,6 +6,8 @@ from Animal import *
 class Player(Animal):
     def __init__(self,game):
         super().__init__(game) 
+
+        self.offset_zindex = 1.5
         
         self.idle_right_up_sheet = pygame.image.load("assets/character/Idle/idle_right_up.png").convert_alpha()
         self.idle_up_sheet = pygame.image.load("assets/character/Idle/idle_up.png").convert_alpha()

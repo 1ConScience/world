@@ -6,6 +6,8 @@ class Animal(Entity):
     def __init__(self,game):
         super().__init__() 
 
+        self.offset_zindex = -0.5
+
         self.type = "Animal"
 
         self.actualsubworld = (0,0)
@@ -48,23 +50,20 @@ class Animal(Entity):
             self.change_dir_cpt = 0
         
         if self.vel != vec(0,0):
-            if self.type == "Wolf":
-                pygame.math.Vector2.scale_to_length(self.vel, VELOCITY_ANIMAL_RUN)
-            else :
-                pygame.math.Vector2.scale_to_length(self.vel, VELOCITY_ANIMAL)
+            pygame.math.Vector2.scale_to_length(self.vel, VELOCITY_ANIMAL)
 
         self.pos += self.vel
 
-        self.rect.midbottom = self.pos 
+        self.rect.center = self.pos 
             
         if self.checkCollide(self.game.world.actualwater_group):
             self.pos -= self.vel*0.5
-            self.rect.midbottom = self.pos 
+            self.rect.center = self.pos 
              
         if self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) or self.checkCollide(self.game.player_group) or self.reachBorders() :
             if self.change_dir_cpt >0:
                 self.pos -= self.vel
-                self.rect.midbottom = self.pos
+                self.rect.center = self.pos
 
                 possible_dir = [(1,1),(1,-1),(-1,1),(-1,-1)]
                 self.vel = vec(random.choice(possible_dir))

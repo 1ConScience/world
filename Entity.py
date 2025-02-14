@@ -5,10 +5,11 @@ class Entity(pygame.sprite.Sprite):
     def __init__(self,zindex=0):
         super().__init__()  
         self.zindex = zindex
+        self.offset_zindex = 0
     
     def updateZindex(self):
         self.zindex = self.rect.bottom/TILE_SIZE4
-        self.zindex -= 1.5
+        self.zindex -= self.offset_zindex
     def animate(self):
         pass
 
