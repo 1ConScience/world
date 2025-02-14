@@ -8,9 +8,9 @@ class Tile(Entity):
         super().__init__(zindex) 
         
         if specific_id != None :
-            self.id_ = specific_id
+            self.id = specific_id
         else :
-            self.id_ = self.getId(value)
+            self.id = self.getId(value)
 
         self.pos = pos
 
@@ -20,12 +20,12 @@ class Tile(Entity):
         self.surf = pygame.Surface((32,32))
         self.surf.fill((value,value,value))'''
 
-        self.surf = pygame.image.load("assets/tiles/tile_"+self.id_+".png").convert_alpha()
+        self.surf = pygame.image.load("assets/tiles/tile_"+self.id+".png").convert_alpha()
         self.rect = self.surf.get_rect(center = self.pos)
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/tiles/mask.png").convert_alpha())
 
         self.water = None
-        if self.id_ == "104":
+        if self.id == "104":
             self.water = AnimatedObject("tiles/water_animation",6,12,pos)
             self.surf = self.water.surf
 
@@ -59,7 +59,7 @@ class Tile(Entity):
             return "0"+str(id)
         
     def animate(self):
-        if self.id_ == "104":
+        if self.id == "104":
             self.water.animate()
             self.surf = self.water.surf
 

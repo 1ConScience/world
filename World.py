@@ -55,7 +55,7 @@ class World:
         for cle, subworld in self.actualsubworlds.items():
             for tile in subworld.tiles:
                 self.actualtiles.append(tile)
-                if tile.id_ == "104" :
+                if tile.id == "104" :
                     tile.add(self.actualwater_group)
             for inoffensiveanimal in subworld.inoffensiveanimals:
                 inoffensiveanimal.add(self.actualinoffensiveanimal_group)
@@ -127,15 +127,15 @@ class SubWorld:
                 self.tiles.append(tile)
                 
                 if x!=0 and y!=0 :
-                    if tile.id_ == "040" :
+                    if tile.id == "040" :
                         luck = random.randint(0,2)
                         if luck == 0 :
                             self.add_flower(tile.rect,y+1)
-                    elif tile.id_ == "028" :
+                    elif tile.id == "028" :
                         luck = random.randint(0,10)
                         if luck == 0 :
                             self.add_wood(tile.rect,y+1)
-                    elif tile.id_ == "063" :
+                    elif tile.id == "063" :
                         luck = random.randint(0,10)
                         if luck == 0 :
                             self.add_rock(tile.rect,y+1)
