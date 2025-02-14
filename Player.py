@@ -58,22 +58,22 @@ class Player(Animal):
         self.vel = vec(0,0)
 
         pressed_keys = pygame.key.get_pressed()            
-        if (pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]) and (pressed_keys[pygame.K_z] or pressed_keys[pygame.K_UP]):
+        '''if (pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]) and (pressed_keys[pygame.K_z] or pressed_keys[pygame.K_UP]):
             self.vel = vec(-2,-1)
         elif (pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]) and (pressed_keys[pygame.K_z] or pressed_keys[pygame.K_UP]):
             self.vel = vec(2,-1)           
         elif (pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]) and (pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]):
             self.vel = vec(-2,1)
         elif (pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]) and (pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]):
-            self.vel = vec(2,1)
-        elif pressed_keys[pygame.K_z] or pressed_keys[pygame.K_UP]:
+            self.vel = vec(2,1)'''
+        if pressed_keys[pygame.K_z] or pressed_keys[pygame.K_UP]:
             self.vel.y = -1
-        elif pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
+        if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
             self.vel.y = 1
-        elif pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]:
-            self.vel.x = -1
-        elif pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]:
-            self.vel.x = 1
+        if pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]:
+            self.vel.x = -2
+        if pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]:
+            self.vel.x = 2
         
         if self.vel != vec(0,0):
             pygame.math.Vector2.scale_to_length(self.vel, VELOCITY)

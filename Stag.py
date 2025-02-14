@@ -1,12 +1,12 @@
 from Animal import *
 
 class Stag(Animal):
-    def __init__(self,pos,game,centerx,centery):
+    def __init__(self,pos,game,key):
         super().__init__(game) 
 
         self.type = "Stag" 
         
-        self.actualsubworld = (centerx,centery)
+        self.actualsubworld = key
 
         self.idle_right_up_sheet = pygame.image.load("assets/animals/stag/critter_stag_NE_idle.png").convert_alpha()
         self.idle_left_up_sheet = pygame.image.load("assets/animals/stag/critter_stag_NW_idle.png").convert_alpha()

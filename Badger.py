@@ -1,12 +1,12 @@
 from Animal import *
 
 class Badger(Animal):
-    def __init__(self,pos,game,centerx,centery):
+    def __init__(self,pos,game,key):
         super().__init__(game)  
 
         self.type = "Badger"
         
-        self.actualsubworld = (centerx,centery)
+        self.actualsubworld = key
 
         self.idle_right_up_sheet = pygame.image.load("assets/animals/badger/critter_badger_NE_idle.png").convert_alpha()
         self.idle_left_up_sheet = pygame.image.load("assets/animals/badger/critter_badger_NW_idle.png").convert_alpha()

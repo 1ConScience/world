@@ -31,7 +31,7 @@ class World:
                 self.addSubWorld(x*TILES_WIDTH,y*TILES_HEIGHT)
 
     def addSubWorld(self,x,y):
-        self.subworlds[str(x)+";"+str(y)] = SubWorld(self.game,x,y)
+        self.subworlds[str(x)+";"+str(y)] = SubWorld(self.game,(x,y))
         self.actualsubworlds[str(x)+";"+str(y)]=self.subworlds[str(x)+";"+str(y)]
         self.updateActualTilesnGroups()
 
@@ -59,6 +59,9 @@ class World:
                 rock.add(self.actualrock_group)
             for wood in subworld.woods:
                 wood.add(self.actualwood_group)
+
+            for tile in subworld.door.tiles_for_collision:
+                tile.add(self.actualrock_group)
         
         self.actualtiles.sort(key=lambda x: x.zindex, reverse=False)
 
@@ -84,12 +87,10 @@ class World:
         self.updateSpecificActualSubworld((gnocchis[0]+TILES_WIDTH,gnocchis[1]-TILES_HEIGHT))
 
 class SubWorld:
-    def __init__(self,game,centerx,centery):
+    def __init__(self,game,key):
         self.game = game
 
-        self.centerx = centerx
-        self.centery = centery
-
+        self.key = key
 
         self.flowers = []
         self.rocks = []
@@ -98,9 +99,9 @@ class SubWorld:
 
         self.tiles = []
 
-        self.add_elements(self.centerx-round(TILES_WIDTH2),self.centery-round(TILES_HEIGHT2))
+        self.add_elements(self.key[0]-round(TILES_WIDTH2),self.key[1]-round(TILES_HEIGHT2))
 
-        self.door = Door(centerx,centery)
+        self.door = Door(key)
 
     def add_elements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH
@@ -141,11 +142,11 @@ class SubWorld:
         inoffensiveanimal = None
         luck = random.randint(0,2)
         if luck == 0 :
-            inoffensiveanimal = Badger(pos,self.game,self.centerx,self.centery)
+            inoffensiveanimal = Badger(pos,self.game,self.key)
         elif luck == 1 :
-            inoffensiveanimal = Wolf(pos,self.game,self.centerx,self.centery)
+            inoffensiveanimal = Wolf(pos,self.game,self.key)
         else :
-            inoffensiveanimal = Stag(pos,self.game,self.centerx,self.centery)
+            inoffensiveanimal = Stag(pos,self.game,self.key)
         self.inoffensiveanimals.append(inoffensiveanimal)
 
     def add_flower(self,pos):

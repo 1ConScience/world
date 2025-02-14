@@ -61,20 +61,35 @@ class Tile(Entity):
             self.water.animate()
             self.surf = self.water.surf
 
-class Door():
-    def __init__(self,centerx,centery):
+class Door(Entity):
+    def __init__(self,key):
+        centerx = key[0]
+        centery = key[1]
+        super().__init__(centery) 
+
         centerx*=TILE_SIZE
         centery*=TILE_SIZE4
+        centery-=TILE_SIZE
+
         self.tiles = []
-        for i in range(1,10,1):
-            tile_bis = Tile((-TILE_SIZE*2+centerx,-TILE_SIZE4*i+centery),0,1*i-1,"063")
+        self.tiles_for_collision = []
+
+        tile_bis = Tile((-TILE_SIZE+centerx,centery-TILE_SIZE4),0,centery,"063")
+        self.tiles.append(tile_bis)
+        self.tiles_for_collision.append(tile_bis)
+        tile_bis = Tile((TILE_SIZE+centerx,centery-TILE_SIZE4),0,centery,"063")
+        self.tiles.append(tile_bis)
+        self.tiles_for_collision.append(tile_bis)
+
+        for i in range(2,9,1):
+            tile_bis = Tile((-TILE_SIZE+centerx,-TILE_SIZE4*i+centery),0,i-1+centery,"063")
             self.tiles.append(tile_bis)
-        for i in range(1,10,1):
-            tile_bis = Tile((TILE_SIZE*2+centerx,-TILE_SIZE4*i+centery),0,1*i-1,"063")
+        for i in range(2,9,1):
+            tile_bis = Tile((TILE_SIZE+centerx,-TILE_SIZE4*i+centery),0,i-1+centery,"063")
             self.tiles.append(tile_bis)
-        for i in range(-1,2,1):
-            tile_bis = Tile((TILE_SIZE*i+centerx,-TILE_SIZE4*9+centery),0,1*i-1,"063")
-            self.tiles.append(tile_bis)
+            
+        tile_bis = Tile((centerx,-TILE_SIZE4*9+centery),0,8+centery,"063")
+        self.tiles.append(tile_bis)
 
     def display(self,surf,camera):
         for tile in self.tiles:
