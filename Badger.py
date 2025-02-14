@@ -28,7 +28,7 @@ class Badger(Animal):
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/animals/badger/badger_mask.png").convert_alpha())
 
         self.pos = pos
-        self.rect = self.surf.get_rect(center = pos)
+        self.rect = self.surf.get_rect(midbottom = pos)
 
         self.index_frame_idle = 0 #that keeps track on the current index of the image list.
         self.index_frame = 0 #that keeps track on the current index of the image list.

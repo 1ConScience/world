@@ -130,15 +130,15 @@ class SubWorld:
                     if tile.id_ == "040" :
                         luck = random.randint(0,2)
                         if luck == 0 :
-                            self.add_flower(tile.rect)
+                            self.add_flower(tile.rect,y+1)
                     elif tile.id_ == "028" :
                         luck = random.randint(0,10)
                         if luck == 0 :
-                            self.add_wood(tile.rect)
+                            self.add_wood(tile.rect,y+1)
                     elif tile.id_ == "063" :
                         luck = random.randint(0,10)
                         if luck == 0 :
-                            self.add_rock(tile.rect)
+                            self.add_rock(tile.rect,y+1)
                     else :
                         luck = random.randint(0,300)
                         if luck == 0 :
@@ -146,23 +146,21 @@ class SubWorld:
 
     def add_inoffensiveanimals(self,pos):
         inoffensiveanimal = None
-        luck = random.randint(0,2)
+        luck = random.randint(0,1)
         if luck == 0 :
             inoffensiveanimal = Badger(pos,self.game,self.key)
-        elif luck == 1 :
-            inoffensiveanimal = Wolf(pos,self.game,self.key)
         else :
             inoffensiveanimal = Stag(pos,self.game,self.key)
         self.inoffensiveanimals.append(inoffensiveanimal)
 
-    def add_flower(self,pos):
-        flower = Flower(pos)
+    def add_flower(self,pos,zindex):
+        flower = Flower(pos,zindex)
         self.flowers.append(flower)
 
-    def add_wood(self,pos):
-        wood = Wood(pos)
+    def add_wood(self,pos,zindex):
+        wood = Wood(pos,zindex)
         self.woods.append(wood)
 
-    def add_rock(self,pos):
-        rock = Rock(pos)
+    def add_rock(self,pos,zindex):
+        rock = Rock(pos,zindex)
         self.rocks.append(rock)

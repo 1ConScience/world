@@ -71,26 +71,22 @@ class Door(Entity):
 
         centerx*=TILE_SIZE
         centery*=TILE_SIZE4
-        centery-=TILE_SIZE
 
         self.tiles = []
         self.tiles_for_collision = []
 
-        tile_bis = Tile((-TILE_SIZE+centerx,centery-TILE_SIZE4),0,centery,"063")
-        self.tiles.append(tile_bis)
-        self.tiles_for_collision.append(tile_bis)
-        tile_bis = Tile((TILE_SIZE+centerx,centery-TILE_SIZE4),0,centery,"063")
-        self.tiles.append(tile_bis)
-        self.tiles_for_collision.append(tile_bis)
-
-        for i in range(2,9,1):
-            tile_bis = Tile((-TILE_SIZE+centerx,-TILE_SIZE4*i+centery),0,i-1+centery,"063")
+        for i in range(1,9,1):
+            tile_bis = Tile((-TILE_SIZE+centerx,-TILE_SIZE4*i+centery),0,i-1+centery,"061")
             self.tiles.append(tile_bis)
-        for i in range(2,9,1):
-            tile_bis = Tile((TILE_SIZE+centerx,-TILE_SIZE4*i+centery),0,i-1+centery,"063")
+            if i == 1 :
+                self.tiles_for_collision.append(tile_bis)
+        for i in range(1,9,1):
+            tile_bis = Tile((TILE_SIZE+centerx,-TILE_SIZE4*i+centery),0,i-1+centery,"061")
             self.tiles.append(tile_bis)
+            if i == 1 :
+                self.tiles_for_collision.append(tile_bis)
             
-        tile_bis = Tile((centerx,-TILE_SIZE4*9+centery),0,8+centery,"063")
+        tile_bis = Tile((centerx,-TILE_SIZE4*9+centery),0,8+centery,"061")
         self.tiles.append(tile_bis)
 
     def display(self,surf,camera):

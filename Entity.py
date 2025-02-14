@@ -8,8 +8,7 @@ class Entity(pygame.sprite.Sprite):
     
     def updateZindex(self):
         self.zindex = self.rect.bottom/TILE_SIZE4
-        print(self.zindex)
-
+        self.zindex -= 1.5
     def animate(self):
         pass
 

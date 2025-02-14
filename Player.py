@@ -91,6 +91,7 @@ class Player(Animal):
             self.rect.midbottom = self.pos 
 
         self.updateZindex()
+        print(self.zindex)
 
     def animate(self):
         if self.vel.x == 0 and self.vel.y == 0:
