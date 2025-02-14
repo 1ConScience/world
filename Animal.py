@@ -69,3 +69,5 @@ class Animal(Entity):
                 possible_dir = [(1,1),(1,-1),(-1,1),(-1,-1)]
                 self.vel = vec(random.choice(possible_dir))
                 self.change_dir_cpt = -10
+
+        self.updateZindex()

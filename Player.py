@@ -90,6 +90,8 @@ class Player(Animal):
             self.pos -= self.vel
             self.rect.midbottom = self.pos 
 
+        self.updateZindex()
+
     def animate(self):
         if self.vel.x == 0 and self.vel.y == 0:
             if self.last_dir == "right":

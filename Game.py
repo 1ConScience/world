@@ -25,6 +25,8 @@ class Game:
         self.player_group = pygame.sprite.Group()
         self.player.add(self.player_group)
 
+        self.elements_to_display = []
+
         self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
         self.camera = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
     
@@ -71,27 +73,33 @@ class Game:
                 if inoffensiveanimal.rect.y >= self.camera.y-TILE_SIZE and inoffensiveanimal.rect.y <= self.camera.y+self.h_ :
                     inoffensiveanimal.move()
 
-    def displayOnlyScreen(self,list):
+    def fillElements_to_display(self,list):
         for elem in list :
             if elem.rect.x >= self.camera.x-TILE_SIZE and elem.rect.x <= self.camera.x+self.w_ :
                 if elem.rect.y >= self.camera.y-TILE_SIZE and elem.rect.y <= self.camera.y+self.h_ :
-                    elem.display(self.display_surf,self.camera)
+                    self.elements_to_display.append(elem)
 
     def display(self):
-        self.displayOnlyScreen(self.world.actualtiles)
+        self.elements_to_display.clear()
+
+
+        self.fillElements_to_display(self.world.actualtiles)
 
         for cle, subworld in self.world.actualsubworlds.items():
-            self.displayOnlyScreen(subworld.flowers)
-            self.displayOnlyScreen(subworld.woods)
-            self.displayOnlyScreen(subworld.rocks)
-            self.displayOnlyScreen(subworld.inoffensiveanimals)
+            self.fillElements_to_display(subworld.flowers)
+            self.fillElements_to_display(subworld.woods)
+            self.fillElements_to_display(subworld.rocks)
+            self.fillElements_to_display(subworld.inoffensiveanimals)
 
-            subworld.door.display(self.display_surf,self.camera)
+            self.elements_to_display.append(subworld.door)
 
-        self.player.display(self.display_surf,self.camera)
+        self.elements_to_display.append(self.player)
 
-        
-        self.displayOnlyScreen(self.world.overlap_display_elements)
+
+        self.elements_to_display.sort(key=lambda x: x.zindex, reverse=False)
+
+        for elem in self.elements_to_display :
+            elem.display(self.display_surf,self.camera)
 
     def updateCameraCenterSmooth(self):
             self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
