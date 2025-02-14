@@ -17,6 +17,12 @@ class World:
 
         self.actualtiles = []
 
+        self.overlap_display_elements = []
+        self.list_front_tiles = []
+        for i in range(29,37,1):
+            self.list_front_tiles.append("0"+str(i))
+
+        #for collisions and other mechanics
         self.actualwater_group = pygame.sprite.Group()
         self.actualinoffensiveanimal_group = pygame.sprite.Group()
         self.actualflower_group = pygame.sprite.Group()
@@ -38,6 +44,7 @@ class World:
     def updateActualTilesnGroups(self):
         #for display
         self.actualtiles.clear()
+        self.overlap_display_elements.clear()
 
         #for collisions and other mechanics
         self.actualwater_group.empty()
@@ -46,11 +53,15 @@ class World:
         self.actualrock_group.empty()
         self.actualwood_group.empty()
 
+        #fill both
         for cle, subworld in self.actualsubworlds.items():
             for tile in subworld.tiles:
                 self.actualtiles.append(tile)
                 if tile.id_ == "104" :
                     tile.add(self.actualwater_group)
+                '''if tile.id_ in self.list_front_tiles:
+                    tile_front = Tile(tile.pos,0,99999,tile.id_+"_front")
+                    self.overlap_display_elements.append(tile_front)'''
             for inoffensiveanimal in subworld.inoffensiveanimals:
                 inoffensiveanimal.add(self.actualinoffensiveanimal_group)
             for flower in subworld.flowers:

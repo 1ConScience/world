@@ -90,6 +90,9 @@ class Game:
 
         self.player.display(self.display_surf,self.camera)
 
+        
+        self.displayOnlyScreen(self.world.overlap_display_elements)
+
     def updateCameraCenterSmooth(self):
             self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
 

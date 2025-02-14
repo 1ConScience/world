@@ -12,6 +12,8 @@ class Tile(Entity):
         else :
             self.id_ = self.getId(value)
 
+        self.pos = pos
+
         '''value +=1
         value *=128
         value -=1
@@ -19,7 +21,7 @@ class Tile(Entity):
         self.surf.fill((value,value,value))'''
 
         self.surf = pygame.image.load("assets/tiles/tile_"+self.id_+".png").convert_alpha()
-        self.rect = self.surf.get_rect(center = pos)
+        self.rect = self.surf.get_rect(center = self.pos)
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/tiles/mask.png").convert_alpha())
 
         self.water = None
