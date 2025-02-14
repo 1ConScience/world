@@ -33,11 +33,13 @@ class World:
     def addSubWorld(self,x,y):
         self.subworlds[str(x)+";"+str(y)] = SubWorld(self.game,x,y)
         self.actualsubworlds[str(x)+";"+str(y)]=self.subworlds[str(x)+";"+str(y)]
-        self.updateActualTilesAndWaterGroup()
+        self.updateActualTilesnGroups()
 
-    def updateActualTilesAndWaterGroup(self):
+    def updateActualTilesnGroups(self):
+        #for display
         self.actualtiles.clear()
-        
+
+        #for collisions and other mechanics
         self.actualwater_group.empty()
         self.actualinoffensiveanimal_group.empty()
         self.actualflower_group.empty()
@@ -49,7 +51,6 @@ class World:
                 self.actualtiles.append(tile)
                 if tile.id_ == "104" :
                     tile.add(self.actualwater_group)
-
             for inoffensiveanimal in subworld.inoffensiveanimals:
                 inoffensiveanimal.add(self.actualinoffensiveanimal_group)
             for flower in subworld.flowers:
@@ -58,7 +59,7 @@ class World:
                 rock.add(self.actualrock_group)
             for wood in subworld.woods:
                 wood.add(self.actualwood_group)
-
+        
         self.actualtiles.sort(key=lambda x: x.zindex, reverse=False)
 
     def updateSpecificActualSubworld(self,gnocchis):
@@ -67,7 +68,7 @@ class World:
             a.start()
         else :
             self.actualsubworlds[str(gnocchis[0])+";"+str(gnocchis[1])]=self.subworlds[str(gnocchis[0])+";"+str(gnocchis[1])]
-            self.updateActualTilesAndWaterGroup()
+            self.updateActualTilesnGroups()
 
     def updateActualSubworlds(self,gnocchis):
         self.actualsubworlds.clear()

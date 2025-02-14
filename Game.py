@@ -80,15 +80,15 @@ class Game:
     def display(self):
         self.displayOnlyScreen(self.world.actualtiles)
 
-        self.displayOnlyScreen(self.world.actualflower_group)
-        self.displayOnlyScreen(self.world.actualwood_group)
-        self.displayOnlyScreen(self.world.actualrock_group)
-        self.displayOnlyScreen(self.world.actualinoffensiveanimal_group)
+        for cle, subworld in self.world.actualsubworlds.items():
+            self.displayOnlyScreen(subworld.flowers)
+            self.displayOnlyScreen(subworld.woods)
+            self.displayOnlyScreen(subworld.rocks)
+            self.displayOnlyScreen(subworld.inoffensiveanimals)
+
+            subworld.door.display(self.display_surf,self.camera)
 
         self.player.display(self.display_surf,self.camera)
-
-        for cle, subworld in self.world.actualsubworlds.items():
-            subworld.door.display(self.display_surf,self.camera)
 
     def updateCameraCenterSmooth(self):
             self.camera_aim = vec(self.player.pos.x - self.w_/2,self.player.pos.y - self.h_/2)
