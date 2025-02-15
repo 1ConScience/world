@@ -13,13 +13,30 @@ class Player(Animal):
         w_frame_pre = main_sheet.get_width()
         h_frame_pre = main_sheet.get_height() / 16
 
-        self.walk_right_sheet = main_sheet.subsurface((0,h_frame_pre*7,w_frame_pre,h_frame_pre))
-        self.walk_left_sheet = main_sheet.subsurface((0,h_frame_pre*6,w_frame_pre,h_frame_pre))
+        tab_sheet = []
+        for i in range(16):
+            surf_tmp = main_sheet.subsurface((0,h_frame_pre*i,w_frame_pre,h_frame_pre))
+            tab_sheet.append(surf_tmp)
 
-        self.idle_right_sheet = main_sheet.subsurface((0,h_frame_pre*15,w_frame_pre,h_frame_pre))
-        self.idle_left_sheet = main_sheet.subsurface((0,h_frame_pre*14,w_frame_pre,h_frame_pre))
+        self.walk_down_sheet = tab_sheet[0]
+        self.walk_left_down_sheet = tab_sheet[1]
+        self.walk_left_up_sheet = tab_sheet[2]
+        self.walk_up_sheet = tab_sheet[3]
+        self.walk_right_up_sheet = tab_sheet[4]
+        self.walk_right_down_sheet = tab_sheet[5]
+        self.walk_left_sheet = tab_sheet[6]
+        self.walk_right_sheet = tab_sheet[7]
+
+        self.idle_down_sheet = tab_sheet[8]
+        self.idle_left_down_sheet = tab_sheet[9]
+        self.idle_left_up_sheet = tab_sheet[10]
+        self.idle_up_sheet = tab_sheet[11]
+        self.idle_right_up_sheet = tab_sheet[12]
+        self.idle_right_down_sheet = tab_sheet[13]
+        self.idle_left_sheet = tab_sheet[14]
+        self.idle_right_sheet = tab_sheet[15]
         
-        self.idle_right_up_sheet = pygame.image.load("assets/character/Idle/idle_right_up.png").convert_alpha()
+        '''self.idle_right_up_sheet = pygame.image.load("assets/character/Idle/idle_right_up.png").convert_alpha()
         self.idle_up_sheet = pygame.image.load("assets/character/Idle/idle_up.png").convert_alpha()
         self.idle_left_up_sheet = pygame.image.load("assets/character/Idle/idle_left_up.png").convert_alpha()
         self.idle_left_down_sheet = pygame.image.load("assets/character/Idle/idle_left_down.png").convert_alpha()
@@ -31,7 +48,7 @@ class Player(Animal):
         self.walk_left_up_sheet = pygame.image.load("assets/character/Walk/walk_left_up.png").convert_alpha()
         self.walk_left_down_sheet = pygame.image.load("assets/character/Walk/walk_left_down.png").convert_alpha()
         self.walk_down_sheet = pygame.image.load("assets/character/Walk/walk_down.png").convert_alpha()
-        self.walk_right_down_sheet = pygame.image.load("assets/character/Walk/walk_right_down.png").convert_alpha()
+        self.walk_right_down_sheet = pygame.image.load("assets/character/Walk/walk_right_down.png").convert_alpha()'''
 
         self.frames_number = 8
 
@@ -42,6 +59,7 @@ class Player(Animal):
         self.shadow = pygame.image.load("assets/character/ShadowBetter.png").convert_alpha()
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/character/mask.png").convert_alpha())
 
+        self.pos.y += TILE_SIZE4*3
         self.rect = self.surf.get_rect(midbottom = self.pos)
 
         self.index_frame = 0 #that keeps track on the current index of the image list.
