@@ -116,7 +116,7 @@ class SubWorld:
         for y in range (start_y,end_y,1):
             for x in range(start_x,end_x,1):
                 value = noise.pnoise2(x/scale,y/scale,octaves=octaves,persistence=persistence,lacunarity=lacunarity,repeatx=end_x,repeaty=end_y,base=0)
-                #topographic_value = noise.pnoise2(x/32,y/32,octaves=1,persistence=persistence,lacunarity=lacunarity,repeatx=end_x,repeaty=end_y,base=0)
+                #topographic_value = noise.pnoise2(x/20,y/20,octaves=3,persistence=2.0,lacunarity=2.0,repeatx=end_x,repeaty=end_y,base=5)
                 topographic_value = None
                 tile = None
                 if y%2 == 0:
@@ -125,12 +125,12 @@ class SubWorld:
                     tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),y,value=value,topographic_value=topographic_value)
                 self.tiles.append(tile)
                 
-                if x!=0 and y!=0 :
+                if not(x==0 and y==0) :
                     if tile.id == "040" :
                         luck = random.randint(0,2)
                         if luck == 0 :
                             self.add_flower(tile.rect,y+1)
-                    elif tile.id == "036" or tile.id == "035" or tile.id == "034" or tile.id == "030" or tile.id == "029" or tile.id == "032" or tile.id == "033"  or tile.id == "031"  :
+                    elif tile.id == "029" or tile.id == "030" or tile.id == "031" or tile.id == "032" or tile.id == "033" or tile.id == "034" or tile.id == "035"  or tile.id == "036"  :
                         self.add_plant(tile.rect,y+1,tile.id)
                     elif tile.id == "028" :
                         luck = random.randint(0,10)

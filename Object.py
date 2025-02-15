@@ -10,7 +10,7 @@ class Object(Entity):
         self.surf = pygame.image.load("assets/tiles/tile_"+self.id+".png").convert_alpha()
         self.mask = pygame.mask.from_surface(self.surf)
         self.rect = self.surf.get_rect(topleft = (rect.x,rect.y))
-        if self.id != "035_front" and self.id != "034_front" and self.id != "030_front" and self.id != "029_front" and self.id != "032_front" and self.id != "033_front" and self.id != "031_front":
+        if self.id != "029_front" and self.id != "030_front" and self.id != "031_front" and self.id != "032_front" and self.id != "033_front" and self.id != "034_front" and self.id != "035_front" and self.id != "036_front":
             self.rect.y -=8
     
 class Flower(Object):
@@ -24,11 +24,7 @@ class Flower(Object):
 class Plant(Object):
     def __init__(self,rect,zindex,id):
 
-        if id == "036" :
-            new_id = random.randint(46,47)
-            idstr = "0"+str(new_id)
-        else:
-            idstr = id+"_front"
+        idstr = id+"_front"
 
         super().__init__(rect,idstr,zindex) 
     
