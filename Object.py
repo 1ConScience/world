@@ -20,6 +20,14 @@ class Flower(Object):
 
         super().__init__(rect,idstr,zindex) 
     
+class Plant(Object):
+    def __init__(self,rect,zindex):
+
+        id = random.randint(46,47)
+        idstr = "0"+str(id)
+
+        super().__init__(rect,idstr,zindex) 
+    
 class Wood(Object):
     def __init__(self,rect,zindex):
 

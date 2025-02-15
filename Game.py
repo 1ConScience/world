@@ -87,6 +87,7 @@ class Game:
 
         for cle, subworld in self.world.actualsubworlds.items():
             self.fillElements_to_display(subworld.flowers)
+            self.fillElements_to_display(subworld.plants)
             self.fillElements_to_display(subworld.woods)
             self.fillElements_to_display(subworld.rocks)
             self.fillElements_to_display(subworld.inoffensiveanimals)

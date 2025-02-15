@@ -24,7 +24,6 @@ class World:
         #for collisions and other mechanics
         self.actualwater_group = pygame.sprite.Group()
         self.actualinoffensiveanimal_group = pygame.sprite.Group()
-        self.actualflower_group = pygame.sprite.Group()
         self.actualrock_group = pygame.sprite.Group()
         self.actualwood_group = pygame.sprite.Group()
 
@@ -47,7 +46,6 @@ class World:
         #for collisions and other mechanics
         self.actualwater_group.empty()
         self.actualinoffensiveanimal_group.empty()
-        self.actualflower_group.empty()
         self.actualrock_group.empty()
         self.actualwood_group.empty()
 
@@ -59,8 +57,6 @@ class World:
                     tile.add(self.actualwater_group)
             for inoffensiveanimal in subworld.inoffensiveanimals:
                 inoffensiveanimal.add(self.actualinoffensiveanimal_group)
-            for flower in subworld.flowers:
-                flower.add(self.actualflower_group)
             for rock in subworld.rocks:
                 rock.add(self.actualrock_group)
             for wood in subworld.woods:
@@ -99,6 +95,7 @@ class SubWorld:
         self.key = key
 
         self.flowers = []
+        self.plants = []
         self.rocks = []
         self.woods = []
         self.inoffensiveanimals = []
@@ -131,6 +128,8 @@ class SubWorld:
                         luck = random.randint(0,2)
                         if luck == 0 :
                             self.add_flower(tile.rect,y+1)
+                    elif tile.id == "036" :
+                        self.add_plant(tile.rect,y+1)
                     elif tile.id == "028" :
                         luck = random.randint(0,10)
                         if luck == 0 :
@@ -156,6 +155,10 @@ class SubWorld:
     def add_flower(self,pos,zindex):
         flower = Flower(pos,zindex)
         self.flowers.append(flower)
+
+    def add_plant(self,pos,zindex):
+        plant = Plant(pos,zindex)
+        self.plants.append(plant)
 
     def add_wood(self,pos,zindex):
         wood = Wood(pos,zindex)
