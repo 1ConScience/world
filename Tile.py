@@ -83,15 +83,15 @@ class Door(Entity):
         self.tiles = []
         self.tiles_for_collision = []
 
-        for i in range(1,10,1):
+        for i in range(0,11,1):
             tile_bis = Tile((-TILE_SIZE+centerx,-TILE_SIZE4*i+centery),i-1+centery,specific_id = "061")
             self.tiles.append(tile_bis)
-            if i == 1 :
+            if i <= 1 :
                 self.tiles_for_collision.append(tile_bis)
-        for i in range(1,10,1):
+        for i in range(0,11,1):
             tile_bis = Tile((TILE_SIZE+centerx,-TILE_SIZE4*i+centery),i-1+centery,specific_id = "061")
             self.tiles.append(tile_bis)
-            if i == 1 :
+            if i <= 1 :
                 self.tiles_for_collision.append(tile_bis)
             
         tile_bis = Tile((centerx,-TILE_SIZE4*9+centery),8+centery,specific_id = "061")
