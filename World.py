@@ -116,11 +116,13 @@ class SubWorld:
         for y in range (start_y,end_y,1):
             for x in range(start_x,end_x,1):
                 value = noise.pnoise2(x/scale,y/scale,octaves=octaves,persistence=persistence,lacunarity=lacunarity,repeatx=end_x,repeaty=end_y,base=0)
+                #topographic_value = noise.pnoise2(x/32,y/32,octaves=1,persistence=persistence,lacunarity=lacunarity,repeatx=end_x,repeaty=end_y,base=0)
+                topographic_value = None
                 tile = None
                 if y%2 == 0:
-                    tile = Tile((x*TILE_SIZE,y*TILE_SIZE4),value,y)
+                    tile = Tile((x*TILE_SIZE,y*TILE_SIZE4),y,value=value,topographic_value=topographic_value)
                 else :
-                    tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),value,y)
+                    tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),y,value=value,topographic_value=topographic_value)
                 self.tiles.append(tile)
                 
                 if x!=0 and y!=0 :
@@ -138,7 +140,7 @@ class SubWorld:
                         luck = random.randint(0,10)
                         if luck == 0 :
                             self.add_rock(tile.rect,y+1)
-                    else :
+                    elif tile.id != "104" :
                         luck = random.randint(0,300)
                         if luck == 0 :
                             self.add_inoffensiveanimals((x*TILE_SIZE,y*TILE_SIZE4))

@@ -4,13 +4,13 @@ from Util import *
 from Entity import *
 
 class Tile(Entity):
-    def __init__(self,pos,value,zindex,specific_id = None):
+    def __init__(self,pos,zindex,value = None,topographic_value = None,specific_id = None):
         super().__init__(zindex) 
         
+        if value != None :
+            self.id = self.getId(value)
         if specific_id != None :
             self.id = specific_id
-        else :
-            self.id = self.getId(value)
 
         self.pos = pos
 
@@ -28,6 +28,14 @@ class Tile(Entity):
         if self.id == "104":
             self.water = AnimatedObject("tiles/water_animation",6,12,pos)
             self.surf = self.water.surf
+            self.rect.y += 5
+
+        if topographic_value != None :
+            self.topography(value)
+
+    def topography(self,value):
+        value += 1
+        self.rect.y -= TILE_SIZE4*value*10
 
     def getId(self,value):
         if value < -0.3 :
@@ -76,23 +84,23 @@ class Door(Entity):
         self.tiles_for_collision = []
 
         for i in range(1,10,1):
-            tile_bis = Tile((-TILE_SIZE+centerx,-TILE_SIZE4*i+centery),0,i-1+centery,"061")
+            tile_bis = Tile((-TILE_SIZE+centerx,-TILE_SIZE4*i+centery),i-1+centery,specific_id = "061")
             self.tiles.append(tile_bis)
             if i == 1 :
                 self.tiles_for_collision.append(tile_bis)
         for i in range(1,10,1):
-            tile_bis = Tile((TILE_SIZE+centerx,-TILE_SIZE4*i+centery),0,i-1+centery,"061")
+            tile_bis = Tile((TILE_SIZE+centerx,-TILE_SIZE4*i+centery),i-1+centery,specific_id = "061")
             self.tiles.append(tile_bis)
             if i == 1 :
                 self.tiles_for_collision.append(tile_bis)
             
-        tile_bis = Tile((centerx,-TILE_SIZE4*9+centery),0,8+centery,"061")
+        tile_bis = Tile((centerx,-TILE_SIZE4*9+centery),8+centery,specific_id = "061")
         self.tiles.append(tile_bis)
 
-        tile_bis = Tile((centerx+TILE_SIZE2,-TILE_SIZE4*9+centery+TILE_SIZE4),0,8+centery,"061")
+        tile_bis = Tile((centerx+TILE_SIZE2,-TILE_SIZE4*9+centery+TILE_SIZE4),8+centery,specific_id = "061")
         self.tiles.append(tile_bis)
 
-        tile_bis = Tile((centerx-TILE_SIZE2,-TILE_SIZE4*9+centery+TILE_SIZE4),0,8+centery,"061")
+        tile_bis = Tile((centerx-TILE_SIZE2,-TILE_SIZE4*9+centery+TILE_SIZE4),8+centery,specific_id = "061")
         self.tiles.append(tile_bis)
 
     def display(self,surf,camera):

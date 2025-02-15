@@ -55,12 +55,8 @@ class Animal(Entity):
         self.pos += self.vel
 
         self.rect.center = self.pos 
-            
-        if self.checkCollide(self.game.world.actualwater_group):
-            self.pos -= self.vel*0.5
-            self.rect.center = self.pos 
              
-        if self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) or self.checkCollide(self.game.player_group) or self.reachBorders() :
+        if self.checkCollide(self.game.world.actualwater_group) or self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) or self.checkCollide(self.game.player_group) or self.reachBorders() :
             if self.change_dir_cpt >0:
                 self.pos -= self.vel
                 self.rect.center = self.pos
