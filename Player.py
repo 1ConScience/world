@@ -73,9 +73,9 @@ class Player(Animal):
         if pressed_keys[pygame.K_s] or pressed_keys[pygame.K_DOWN]:
             self.vel.y = 1
         if pressed_keys[pygame.K_q] or pressed_keys[pygame.K_LEFT]:
-            self.vel.x = -2
+            self.vel.x = -1
         if pressed_keys[pygame.K_d] or pressed_keys[pygame.K_RIGHT]:
-            self.vel.x = 2
+            self.vel.x = 1
         
         if self.vel != vec(0,0):
             pygame.math.Vector2.scale_to_length(self.vel, VELOCITY)
@@ -93,7 +93,6 @@ class Player(Animal):
             self.rect.midbottom = self.pos 
 
         self.updateZindex()
-        print(self.zindex)
 
     def animate(self):
         if self.vel.x == 0 and self.vel.y == 0:
