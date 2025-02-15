@@ -85,7 +85,8 @@ class Game:
 
         self.fillElements_to_display(self.world.actualtiles)
 
-        for cle, subworld in self.world.actualsubworlds.items():
+        dict_tmp = self.world.actualsubworlds.copy()
+        for cle, subworld in dict_tmp.items():
             self.fillElements_to_display(subworld.flowers)
             self.fillElements_to_display(subworld.plants)
             self.fillElements_to_display(subworld.woods)
