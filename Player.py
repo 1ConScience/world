@@ -8,6 +8,16 @@ class Player(Animal):
         super().__init__(game) 
 
         self.offset_zindex = 1.5
+
+        main_sheet = pygame.image.load("assets/character/main_sheet.png").convert_alpha()
+        w_frame_pre = main_sheet.get_width()
+        h_frame_pre = main_sheet.get_height() / 16
+
+        self.walk_right_sheet = main_sheet.subsurface((0,h_frame_pre*7,w_frame_pre,h_frame_pre))
+        self.walk_left_sheet = main_sheet.subsurface((0,h_frame_pre*6,w_frame_pre,h_frame_pre))
+
+        self.idle_right_sheet = main_sheet.subsurface((0,h_frame_pre*15,w_frame_pre,h_frame_pre))
+        self.idle_left_sheet = main_sheet.subsurface((0,h_frame_pre*14,w_frame_pre,h_frame_pre))
         
         self.idle_right_up_sheet = pygame.image.load("assets/character/Idle/idle_right_up.png").convert_alpha()
         self.idle_up_sheet = pygame.image.load("assets/character/Idle/idle_up.png").convert_alpha()
@@ -15,7 +25,7 @@ class Player(Animal):
         self.idle_left_down_sheet = pygame.image.load("assets/character/Idle/idle_left_down.png").convert_alpha()
         self.idle_down_sheet = pygame.image.load("assets/character/Idle/idle_down.png").convert_alpha()
         self.idle_right_down_sheet = pygame.image.load("assets/character/Idle/idle_right_down.png").convert_alpha()
-        
+
         self.walk_right_up_sheet = pygame.image.load("assets/character/Walk/walk_right_up.png").convert_alpha()
         self.walk_up_sheet = pygame.image.load("assets/character/Walk/walk_up.png").convert_alpha()
         self.walk_left_up_sheet = pygame.image.load("assets/character/Walk/walk_left_up.png").convert_alpha()
@@ -89,7 +99,7 @@ class Player(Animal):
     def animate(self):
         if self.vel.x == 0 and self.vel.y == 0:
             if self.last_dir == "right":
-                self.surf = self.idle_right_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.surf = self.idle_right_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
             elif self.last_dir == "right_up":
                 self.surf = self.idle_right_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
             elif self.last_dir == "up":
@@ -97,7 +107,7 @@ class Player(Animal):
             elif self.last_dir == "left_up":
                 self.surf = self.idle_left_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
             elif self.last_dir == "left":
-                self.surf = self.idle_left_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+                self.surf = self.idle_left_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
             elif self.last_dir == "left_down":
                 self.surf = self.idle_left_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
             elif self.last_dir == "down":
@@ -105,7 +115,7 @@ class Player(Animal):
             elif self.last_dir == "right_down":
                 self.surf = self.idle_right_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
         elif self.vel.x > 0 and self.vel.y == 0:
-            self.surf = self.walk_right_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+            self.surf = self.walk_right_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
             self.last_dir = "right"
         elif self.vel.x > 0 and self.vel.y < 0:
             self.surf = self.walk_right_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
@@ -117,7 +127,7 @@ class Player(Animal):
             self.surf = self.walk_left_up_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
             self.last_dir = "left_up"
         elif self.vel.x < 0 and self.vel.y == 0:
-            self.surf = self.walk_left_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
+            self.surf = self.walk_left_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
             self.last_dir = "left"
         elif self.vel.x < 0 and self.vel.y > 0:
             self.surf = self.walk_left_down_sheet.subsurface((self.w_frame*self.index_frame,0,self.w_frame,self.h_frame))
