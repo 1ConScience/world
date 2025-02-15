@@ -130,8 +130,8 @@ class SubWorld:
                         luck = random.randint(0,2)
                         if luck == 0 :
                             self.add_flower(tile.rect,y+1)
-                    elif tile.id == "036" :
-                        self.add_plant(tile.rect,y+1)
+                    elif tile.id == "036" or tile.id == "035" or tile.id == "034" or tile.id == "030" or tile.id == "029" or tile.id == "032" or tile.id == "033"  or tile.id == "031"  :
+                        self.add_plant(tile.rect,y+1,tile.id)
                     elif tile.id == "028" :
                         luck = random.randint(0,10)
                         if luck == 0 :
@@ -158,8 +158,8 @@ class SubWorld:
         flower = Flower(pos,zindex)
         self.flowers.append(flower)
 
-    def add_plant(self,pos,zindex):
-        plant = Plant(pos,zindex)
+    def add_plant(self,pos,zindex,id):
+        plant = Plant(pos,zindex,id)
         self.plants.append(plant)
 
     def add_wood(self,pos,zindex):
