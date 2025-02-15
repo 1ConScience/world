@@ -28,14 +28,14 @@ class Tile(Entity):
         if self.id == "104":
             self.water = AnimatedObject("tiles/water_animation",6,12,pos)
             self.surf = self.water.surf
-            self.rect.y += 5
+            self.rect.y += TILE_SIZE4+1
 
-        if topographic_value != None :
+        if value != None :
             self.topography(value)
 
     def topography(self,value):
-        value += 1
-        self.rect.y -= TILE_SIZE4*value*10
+        if value > 0.3 :
+            self.rect.y += TILE_SIZE4
 
     def getId(self,value):
         if value < -0.3 :
@@ -60,7 +60,7 @@ class Tile(Entity):
             id = random.randint(36,40)
             return "0"+str(id)
         elif value < 0.4 :
-            id = random.randint(61,63)
+            id = random.randint(61,62)
             return "0"+str(id)
         else :
             id = random.randint(17,21)

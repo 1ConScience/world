@@ -39,7 +39,7 @@ class Wood(Object):
 class Rock(Object):
     def __init__(self,rect,zindex):
 
-        id = random.randint(64,65)
+        id = random.randint(64,67)
         idstr = "0"+str(id)
         
         super().__init__(rect,idstr,zindex) 

@@ -109,8 +109,8 @@ class SubWorld:
     def add_elements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH
         end_y = start_y+TILES_HEIGHT
-        scale = 13
-        octaves = 7
+        scale = 20#13
+        octaves = 7#7
         lacunarity = 1.0
         persistence = 1.0
         for y in range (start_y,end_y,1):
@@ -129,6 +129,8 @@ class SubWorld:
                     if tile.id == "040" :
                         luck = random.randint(0,2)
                         if luck == 0 :
+                            self.add_rock(tile.rect,y+1)
+                        else :
                             self.add_flower(tile.rect,y+1)
                     elif tile.id == "029" or tile.id == "030" or tile.id == "031" or tile.id == "032" or tile.id == "033" or tile.id == "034" or tile.id == "035"  or tile.id == "036"  :
                         self.add_plant(tile.rect,y+1,tile.id)
@@ -136,10 +138,6 @@ class SubWorld:
                         luck = random.randint(0,10)
                         if luck == 0 :
                             self.add_wood(tile.rect,y+1)
-                    elif tile.id == "063" :
-                        luck = random.randint(0,10)
-                        if luck == 0 :
-                            self.add_rock(tile.rect,y+1)
                     elif tile.id != "104" :
                         luck = random.randint(0,300)
                         if luck == 0 :
