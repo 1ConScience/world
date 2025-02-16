@@ -45,8 +45,8 @@ class Player(Animal):
         self.shadow = pygame.image.load("assets/character/ShadowBetter.png").convert_alpha()
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/character/mask.png").convert_alpha())
 
-        self.pos.y += TILE_SIZE4*2
-        self.rect = self.surf.get_rect(midbottom = self.pos)
+        self.pos.y -=TILE_SIZE4
+        self.rect = self.surf.get_rect(center = self.pos)
 
         self.index_frame = 0 #that keeps track on the current index of the image list.
         self.current_frame = 0 #that keeps track on the current time or current frame since last the index switched.
@@ -73,9 +73,13 @@ class Player(Animal):
         return newsubworldkey
     
     def getBlockPos(self):
-        x = round(self.pos.x/TILE_SIZE)
-        y = round(self.pos.y/TILE_SIZE4)-2
-        pos = (x,y)
+
+
+        x = (self.pos.x)/TILE_SIZE
+        x -= 0.5
+        y = (self.pos.y+TILE_SIZE4)/TILE_SIZE4
+
+        pos = (round(x),round(y))
         return pos
     
     def action(self):
@@ -112,15 +116,15 @@ class Player(Animal):
 
         self.pos += self.vel
 
-        self.rect.midbottom = self.pos 
+        self.rect.center = self.pos 
             
         if self.checkCollide(self.game.world.actualwater_group):
             self.pos -= self.vel*0.5
-            self.rect.midbottom = self.pos 
+            self.rect.center = self.pos 
             
         if self.checkCollide(self.game.world.actualinoffensiveanimal_group) or self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) :
             self.pos -= self.vel
-            self.rect.midbottom = self.pos 
+            self.rect.center = self.pos 
 
         self.updateZindex()
 
