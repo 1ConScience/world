@@ -73,8 +73,6 @@ class Player(Animal):
         return newsubworldkey
     
     def getBlockPos(self):
-
-
         x = self.pos.x/TILE_SIZE
         y = self.pos.y/TILE_SIZE4
 
@@ -85,7 +83,6 @@ class Player(Animal):
         return pos
     
     def action(self):
-        print(self.getBlockPos())
         pressed_mouse_buttons = pygame.mouse.get_pressed()
         if pressed_mouse_buttons[0]:
 
