@@ -35,20 +35,6 @@ class Player(Animal):
         self.idle_right_down_sheet = tab_sheet[13]
         self.idle_left_sheet = tab_sheet[14]
         self.idle_right_sheet = tab_sheet[15]
-        
-        '''self.idle_right_up_sheet = pygame.image.load("assets/character/Idle/idle_right_up.png").convert_alpha()
-        self.idle_up_sheet = pygame.image.load("assets/character/Idle/idle_up.png").convert_alpha()
-        self.idle_left_up_sheet = pygame.image.load("assets/character/Idle/idle_left_up.png").convert_alpha()
-        self.idle_left_down_sheet = pygame.image.load("assets/character/Idle/idle_left_down.png").convert_alpha()
-        self.idle_down_sheet = pygame.image.load("assets/character/Idle/idle_down.png").convert_alpha()
-        self.idle_right_down_sheet = pygame.image.load("assets/character/Idle/idle_right_down.png").convert_alpha()
-
-        self.walk_right_up_sheet = pygame.image.load("assets/character/Walk/walk_right_up.png").convert_alpha()
-        self.walk_up_sheet = pygame.image.load("assets/character/Walk/walk_up.png").convert_alpha()
-        self.walk_left_up_sheet = pygame.image.load("assets/character/Walk/walk_left_up.png").convert_alpha()
-        self.walk_left_down_sheet = pygame.image.load("assets/character/Walk/walk_left_down.png").convert_alpha()
-        self.walk_down_sheet = pygame.image.load("assets/character/Walk/walk_down.png").convert_alpha()
-        self.walk_right_down_sheet = pygame.image.load("assets/character/Walk/walk_right_down.png").convert_alpha()'''
 
         self.frames_number = 8
 
@@ -59,12 +45,14 @@ class Player(Animal):
         self.shadow = pygame.image.load("assets/character/ShadowBetter.png").convert_alpha()
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/character/mask.png").convert_alpha())
 
-        self.pos.y += TILE_SIZE4*3
+        self.pos.y += TILE_SIZE4*2
         self.rect = self.surf.get_rect(midbottom = self.pos)
 
         self.index_frame = 0 #that keeps track on the current index of the image list.
         self.current_frame = 0 #that keeps track on the current time or current frame since last the index switched.
         self.animation_frames = 8 #that define how many seconds or frames should pass before switching image.
+
+        self.mouse_free = True
 
     def testNewSubworldkey(self):
         newsubworldkey = None
@@ -83,6 +71,28 @@ class Player(Animal):
             newsubworldkey = self.actualsubworld
 
         return newsubworldkey
+    
+    def getBlockPos(self):
+        x = round(self.pos.x/TILE_SIZE)
+        y = round(self.pos.y/TILE_SIZE4)-2
+        pos = (x,y)
+        return pos
+    
+    def action(self):
+        print(self.getBlockPos())
+        pressed_mouse_buttons = pygame.mouse.get_pressed()
+        if pressed_mouse_buttons[0]:
+
+            if self.mouse_free:
+        
+                pos_tmp = self.getBlockPos()
+                subworld_tmp = self.game.world.subworlds[str(self.actualsubworld[0])+";"+str(self.actualsubworld[1])]
+                subworld_tmp.addBlock(pos_tmp[0],pos_tmp[1])
+
+                self.mouse_free = False
+
+        else :
+            self.mouse_free = True
 
     def move(self):
         self.vel = vec(0,0)

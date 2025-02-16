@@ -100,13 +100,23 @@ class SubWorld:
         self.woods = []
         self.inoffensiveanimals = []
 
+        self.playerBlocks = []
+
         self.tiles = []
 
-        self.add_elements(self.key[0]-round(TILES_WIDTH2),self.key[1]-round(TILES_HEIGHT2))
+        self.addElements(self.key[0]-round(TILES_WIDTH2),self.key[1]-round(TILES_HEIGHT2))
 
         self.door = Door(key)
 
-    def add_elements(self,start_x,start_y):
+    def addBlock(self,x,y):
+        tile = None
+        if y%2 == 0:
+            tile = Tile((x*TILE_SIZE,y*TILE_SIZE4),y,specific_id = "061")
+        else :
+            tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),y,specific_id = "061")
+        self.playerBlocks.append(tile)
+
+    def addElements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH
         end_y = start_y+TILES_HEIGHT
         scale = 20#13
@@ -139,17 +149,12 @@ class SubWorld:
                         if luck == 0 :
                             self.add_wood(tile.rect,y+1)
                     elif tile.id != "104" :
-                        luck = random.randint(0,300)
+                        luck = random.randint(0,150)
                         if luck == 0 :
                             self.add_inoffensiveanimals((x*TILE_SIZE,y*TILE_SIZE4))
 
     def add_inoffensiveanimals(self,pos):
-        inoffensiveanimal = None
-        luck = random.randint(0,1)
-        if luck == 0 :
-            inoffensiveanimal = Badger(pos,self.game,self.key)
-        else :
-            inoffensiveanimal = Stag(pos,self.game,self.key)
+        inoffensiveanimal = Stag(pos,self.game,self.key)
         self.inoffensiveanimals.append(inoffensiveanimal)
 
     def add_flower(self,pos,zindex):

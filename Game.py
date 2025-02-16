@@ -42,6 +42,7 @@ class Game:
             self.display_surf.fill("black")
             self.screen.fill("black")
             
+            self.player.action()
             self.player.move()
 
             gnocchis = self.player.testNewSubworldkey()
@@ -92,6 +93,8 @@ class Game:
             self.fillElements_to_display(subworld.woods)
             self.fillElements_to_display(subworld.rocks)
             self.fillElements_to_display(subworld.inoffensiveanimals)
+
+            self.fillElements_to_display(subworld.playerBlocks)
 
             self.elements_to_display.append(subworld.door)
 
