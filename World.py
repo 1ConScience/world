@@ -100,7 +100,7 @@ class SubWorld:
         self.woods = []
         self.inoffensiveanimals = []
 
-        self.playerBlocks = []
+        self.playerBlocks = {}
 
         self.tiles = []
 
@@ -109,12 +109,18 @@ class SubWorld:
         self.door = Door(key)
 
     def addBlock(self,x,y):
+        if str(x)+";"+str(y) not in self.playerBlocks:
+            self.playerBlocks[str(x)+";"+str(y)] = []
+
+        level = len(self.playerBlocks[str(x)+";"+str(y)])
+
         tile = None
         if y%2 == 0:
-            tile = Tile((x*TILE_SIZE,y*TILE_SIZE4),y,specific_id = "061")
+            tile = Tile((x*TILE_SIZE,y*TILE_SIZE4-level*TILE_SIZE4),y,specific_id = "061")
         else :
-            tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),y,specific_id = "061")
-        self.playerBlocks.append(tile)
+            tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4-level*TILE_SIZE4),y,specific_id = "061")
+
+        self.playerBlocks[str(x)+";"+str(y)].append(tile)
 
     def addElements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH

@@ -94,7 +94,8 @@ class Game:
             self.fillElements_to_display(subworld.rocks)
             self.fillElements_to_display(subworld.inoffensiveanimals)
 
-            self.fillElements_to_display(subworld.playerBlocks)
+            for cle, column in subworld.playerBlocks.items():
+                self.fillElements_to_display(column)
 
             self.elements_to_display.append(subworld.door)
 

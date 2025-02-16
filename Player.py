@@ -75,9 +75,11 @@ class Player(Animal):
     def getBlockPos(self):
 
 
-        x = (self.pos.x)/TILE_SIZE
+        x = self.pos.x/TILE_SIZE
+        y = self.pos.y/TILE_SIZE4
+
         x -= 0.5
-        y = (self.pos.y+TILE_SIZE4)/TILE_SIZE4
+        y += 1.5
 
         pos = (round(x),round(y))
         return pos
