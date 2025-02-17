@@ -2,6 +2,7 @@ import pygame
 from Entity import *
 from constvar import *
 from Animal import *
+from Tile import *
 
 class Player(Animal):
     def __init__(self,game):
@@ -54,6 +55,8 @@ class Player(Animal):
 
         self.mouse_free = True
 
+        self.pre_tile = Tile((0,0),99999,specific_id = "061_trans")
+
     def testNewSubworldkey(self):
         newsubworldkey = None
 
@@ -80,15 +83,26 @@ class Player(Animal):
         y += 1.5
 
         pos = (round(x),round(y))
+
         return pos
     
+    def updatePre_tile(self,pos_tmp):
+        if pos_tmp[1]%2 == 0:
+            self.pre_tile.rect.centerx = pos_tmp[0]*TILE_SIZE
+        else :
+            self.pre_tile.rect.centerx = pos_tmp[0]*TILE_SIZE+TILE_SIZE2
+        self.pre_tile.rect.centery = pos_tmp[1]*TILE_SIZE4
+    
     def action(self):
+        pos_tmp = self.getBlockPos()
+
+        self.updatePre_tile(pos_tmp)
+
         pressed_mouse_buttons = pygame.mouse.get_pressed()
         if pressed_mouse_buttons[0]:
 
             if self.mouse_free:
         
-                pos_tmp = self.getBlockPos()
                 subworld_tmp = self.game.world.subworlds[str(self.actualsubworld[0])+";"+str(self.actualsubworld[1])]
                 subworld_tmp.addBlock(pos_tmp[0],pos_tmp[1])
 
@@ -182,4 +196,5 @@ class Player(Animal):
         self.animate()
 
         surf.blit(self.shadow, (self.rect.x - camera.x, self.rect.y - camera.y))
+        surf.blit(self.pre_tile.surf, (self.pre_tile.rect.x - camera.x, self.rect.y - camera.y + TILE_SIZE))
         surf.blit(self.surf, (self.rect.x - camera.x, self.rect.y - camera.y))
