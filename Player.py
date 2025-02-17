@@ -43,7 +43,9 @@ class Player(Animal):
         self.h_frame = self.idle_right_up_sheet.get_height()
 
         self.surf = self.idle_right_up_sheet.subsurface((0,0,self.w_frame,self.h_frame))
-        self.shadow = pygame.image.load("assets/character/ShadowBetter.png").convert_alpha()
+        self.surf_shadow = pygame.image.load("assets/character/ShadowBetter.png").convert_alpha()
+        self.surf_tile_selected = pygame.image.load("assets/tiles/tile_061.png").convert_alpha()
+        self.surf_tile_selected = pygame.transform.scale(self.surf_tile_selected,(self.surf_tile_selected.get_width()/2,self.surf_tile_selected.get_height()/2))
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/character/mask.png").convert_alpha())
 
         self.pos.y -=TILE_SIZE4
@@ -179,5 +181,6 @@ class Player(Animal):
 
         self.animate()
 
-        surf.blit(self.shadow, (self.rect.x - camera.x, self.rect.y - camera.y))
+        surf.blit(self.surf_shadow, (self.rect.x - camera.x, self.rect.y - camera.y))
         surf.blit(self.surf, (self.rect.x - camera.x, self.rect.y - camera.y))
+        surf.blit(self.surf_tile_selected, (self.rect.x - camera.x + TILE_SIZE2, self.rect.y - camera.y ))
