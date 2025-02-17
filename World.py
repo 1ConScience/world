@@ -100,8 +100,8 @@ class SubWorld:
         self.woods = []
         self.inoffensiveanimals = []
 
-        self.playerBlocks = {}
-        self.playerBlocks_alreadySorted = []
+        self.playerTiles = {}
+        self.playerTiles_alreadySorted = []
 
         self.tiles = {}
 
@@ -109,23 +109,22 @@ class SubWorld:
 
         self.door = Door(key)
 
-    def addBlock(self,x,y):
-        if str(x)+";"+str(y) not in self.playerBlocks:
-            self.playerBlocks[str(x)+";"+str(y)] = []
+    def addTile(self,tile):
+        x = int(tile.pos[0])
+        y = int(tile.pos[1])
 
-        level = len(self.playerBlocks[str(x)+";"+str(y)])
+        if str(x)+";"+str(y) not in self.playerTiles:
+            self.playerTiles[str(x)+";"+str(y)] = []
 
-        tile = None
-        if y%2 == 0:
-            tile = Tile((x*TILE_SIZE,y*TILE_SIZE4-level*TILE_SIZE4),y,specific_id = "061")
-        else :
-            tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4-level*TILE_SIZE4),y,specific_id = "061")
+        level = len(self.playerTiles[str(x)+";"+str(y)])
 
-        self.playerBlocks[str(x)+";"+str(y)].append(tile)
+        tile = Tile((x,y-level*TILE_SIZE4),tile.zindex,specific_id = "061")
+
+        self.playerTiles[str(x)+";"+str(y)].append(tile)
 
 
-        self.playerBlocks_alreadySorted.append(tile)
-        self.playerBlocks_alreadySorted.sort(key=lambda x: x.zindex, reverse=False)
+        self.playerTiles_alreadySorted.append(tile)
+        self.playerTiles_alreadySorted.sort(key=lambda x: x.zindex, reverse=False)
 
     def addElements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH
@@ -137,13 +136,11 @@ class SubWorld:
         for y in range (start_y,end_y,1):
             for x in range(start_x,end_x,1):
                 value = noise.pnoise2(x/scale,y/scale,octaves=octaves,persistence=persistence,lacunarity=lacunarity,repeatx=end_x,repeaty=end_y,base=0)
-                #topographic_value = noise.pnoise2(x/20,y/20,octaves=3,persistence=2.0,lacunarity=2.0,repeatx=end_x,repeaty=end_y,base=5)
-                topographic_value = None
                 tile = None
                 if y%2 == 0:
-                    tile = Tile((x*TILE_SIZE,y*TILE_SIZE4),y,value=value,topographic_value=topographic_value)
+                    tile = Tile((x*TILE_SIZE,y*TILE_SIZE4),y,value=value)
                 else :
-                    tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),y,value=value,topographic_value=topographic_value)
+                    tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),y,value=value)
                 self.tiles[str(x)+";"+str(y)] = tile
                 
                 if not(x==0 and y==0) :
@@ -183,3 +180,39 @@ class SubWorld:
     def add_rock(self,pos,zindex):
         rock = Rock(pos,zindex)
         self.rocks.append(rock)
+
+class Door(Entity):
+    def __init__(self,key):
+        centerx = key[0]
+        centery = key[1]
+        super().__init__(centery) 
+
+        centerx*=TILE_SIZE
+        centery*=TILE_SIZE4
+
+        self.tiles = []
+        self.tiles_for_collision = []
+
+        for i in range(0,11,1):
+            tile_bis = Tile((-TILE_SIZE+centerx,-TILE_SIZE4*i+centery),i-1+centery,specific_id = "061")
+            self.tiles.append(tile_bis)
+            if i <= 1 :
+                self.tiles_for_collision.append(tile_bis)
+        for i in range(0,11,1):
+            tile_bis = Tile((TILE_SIZE+centerx,-TILE_SIZE4*i+centery),i-1+centery,specific_id = "061")
+            self.tiles.append(tile_bis)
+            if i <= 1 :
+                self.tiles_for_collision.append(tile_bis)
+            
+        tile_bis = Tile((centerx,-TILE_SIZE4*9+centery),8+centery,specific_id = "061")
+        self.tiles.append(tile_bis)
+
+        tile_bis = Tile((centerx+TILE_SIZE2,-TILE_SIZE4*9+centery+TILE_SIZE4),8+centery,specific_id = "061")
+        self.tiles.append(tile_bis)
+
+        tile_bis = Tile((centerx-TILE_SIZE2,-TILE_SIZE4*9+centery+TILE_SIZE4),8+centery,specific_id = "061")
+        self.tiles.append(tile_bis)
+
+    def display(self,surf,camera):
+        for tile in self.tiles:
+            tile.display(surf,camera)

@@ -4,7 +4,7 @@ from Util import *
 from Entity import *
 
 class Tile(Entity):
-    def __init__(self,pos,zindex,value = None,topographic_value = None,specific_id = None):
+    def __init__(self,pos,zindex,value = None,specific_id = None):
         super().__init__(zindex) 
         
         if value != None :
@@ -70,39 +70,3 @@ class Tile(Entity):
         if self.id == "104":
             self.water.animate()
             self.surf = self.water.surf
-
-class Door(Entity):
-    def __init__(self,key):
-        centerx = key[0]
-        centery = key[1]
-        super().__init__(centery) 
-
-        centerx*=TILE_SIZE
-        centery*=TILE_SIZE4
-
-        self.tiles = []
-        self.tiles_for_collision = []
-
-        for i in range(0,11,1):
-            tile_bis = Tile((-TILE_SIZE+centerx,-TILE_SIZE4*i+centery),i-1+centery,specific_id = "061")
-            self.tiles.append(tile_bis)
-            if i <= 1 :
-                self.tiles_for_collision.append(tile_bis)
-        for i in range(0,11,1):
-            tile_bis = Tile((TILE_SIZE+centerx,-TILE_SIZE4*i+centery),i-1+centery,specific_id = "061")
-            self.tiles.append(tile_bis)
-            if i <= 1 :
-                self.tiles_for_collision.append(tile_bis)
-            
-        tile_bis = Tile((centerx,-TILE_SIZE4*9+centery),8+centery,specific_id = "061")
-        self.tiles.append(tile_bis)
-
-        tile_bis = Tile((centerx+TILE_SIZE2,-TILE_SIZE4*9+centery+TILE_SIZE4),8+centery,specific_id = "061")
-        self.tiles.append(tile_bis)
-
-        tile_bis = Tile((centerx-TILE_SIZE2,-TILE_SIZE4*9+centery+TILE_SIZE4),8+centery,specific_id = "061")
-        self.tiles.append(tile_bis)
-
-    def display(self,surf,camera):
-        for tile in self.tiles:
-            tile.display(surf,camera)

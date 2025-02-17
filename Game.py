@@ -98,10 +98,7 @@ class Game:
             self.fillElements_to_display(subworld.woods)
             self.fillElements_to_display(subworld.rocks)
             self.fillElements_to_display(subworld.inoffensiveanimals)
-
-            '''for cle, column in subworld.playerBlocks.items():
-                self.fillElements_to_display(column)'''
-            self.fillElements_to_display(subworld.playerBlocks_alreadySorted)
+            self.fillElements_to_display(subworld.playerTiles_alreadySorted)
 
             self.elements_to_display.append(subworld.door)
 

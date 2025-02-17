@@ -55,9 +55,6 @@ class Player(Animal):
 
         self.mouse_free = True
 
-        self.pre_tile = Tile((0,0),99999,specific_id = "061_trans")
-        self.tile_pos = (0,0)
-
     def testNewSubworldkey(self):
         newsubworldkey = None
 
@@ -76,22 +73,22 @@ class Player(Animal):
 
         return newsubworldkey
     
-    '''def updatePre_tile(self):
-        if pos_tmp[1]%2 == 0:
-            self.pre_tile.rect.centerx = pos_tmp[0]*TILE_SIZE
-        else :
-            self.pre_tile.rect.centerx = pos_tmp[0]*TILE_SIZE+TILE_SIZE2
-        self.pre_tile.rect.centery = pos_tmp[1]*TILE_SIZE4'''
+    def getTileUnderPlayer(self):
+        subworld = self.game.world.subworlds[str(self.actualsubworld[0])+";"+str(self.actualsubworld[1])]
+        for cle,tile in subworld.tiles.items():
+            if pygame.sprite.collide_mask(self, tile):
+                return tile
     
     def action(self):
-
         pressed_mouse_buttons = pygame.mouse.get_pressed()
         if pressed_mouse_buttons[0]:
 
             if self.mouse_free:
         
                 subworld_tmp = self.game.world.subworlds[str(self.actualsubworld[0])+";"+str(self.actualsubworld[1])]
-                #subworld_tmp.addBlock(pos_tmp[0],pos_tmp[1])
+                tile = self.getTileUnderPlayer()
+                if tile != None :
+                    subworld_tmp.addTile(tile)
 
                 self.mouse_free = False
 
@@ -183,5 +180,4 @@ class Player(Animal):
         self.animate()
 
         surf.blit(self.shadow, (self.rect.x - camera.x, self.rect.y - camera.y))
-        surf.blit(self.pre_tile.surf, (self.pre_tile.rect.x - camera.x, self.rect.y - camera.y +TILE_SIZE2+TILE_SIZE4))
         surf.blit(self.surf, (self.rect.x - camera.x, self.rect.y - camera.y))
