@@ -1,6 +1,7 @@
 from World import *
 from Player import *
 from Util import *
+from os import walk
 
 class Game:
     def __init__(self):
@@ -10,6 +11,11 @@ class Game:
         pygame.display.set_caption("WORLD")
         self.clock = pygame.time.Clock()
         self.running = True
+
+        filenames = next(walk("assets/tiles/"), (None, None, []))[2]  # [] if no file
+        for i in range(len(filenames)):
+            print(filenames[i])
+            IMAGES_DICT[filenames[i]] = pygame.image.load("assets/tiles/"+filenames[i]).convert_alpha()
 
         self.w_ = 640
         self.h_ = 360
