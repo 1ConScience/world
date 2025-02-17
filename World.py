@@ -51,7 +51,7 @@ class World:
 
         #fill both
         for cle, subworld in self.actualsubworlds.items():
-            for tile in subworld.tiles:
+            for cle,tile in subworld.tiles.items():
                 self.actualtiles.append(tile)
                 if tile.id == "104" :
                     tile.add(self.actualwater_group)
@@ -103,7 +103,7 @@ class SubWorld:
         self.playerBlocks = {}
         self.playerBlocks_alreadySorted = []
 
-        self.tiles = []
+        self.tiles = {}
 
         self.addElements(self.key[0]-round(TILES_WIDTH2),self.key[1]-round(TILES_HEIGHT2))
 
@@ -144,7 +144,7 @@ class SubWorld:
                     tile = Tile((x*TILE_SIZE,y*TILE_SIZE4),y,value=value,topographic_value=topographic_value)
                 else :
                     tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4),y,value=value,topographic_value=topographic_value)
-                self.tiles.append(tile)
+                self.tiles[str(x)+";"+str(y)] = tile
                 
                 if not(x==0 and y==0) :
                     if tile.id == "040" :
