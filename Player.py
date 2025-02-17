@@ -77,7 +77,7 @@ class Player(Animal):
     
     def getTileUnderPlayer(self):
         subworld = self.game.world.subworlds[str(self.actualsubworld[0])+";"+str(self.actualsubworld[1])]
-        for cle,tile in subworld.tiles.items():
+        for tile in subworld.tiles:
             if pygame.sprite.collide_mask(self, tile):
                 return tile
     
