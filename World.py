@@ -126,14 +126,17 @@ class SubWorld:
         self.playerTiles_alreadySorted.append(tile)
         self.playerTiles_alreadySorted.sort(key=lambda x: x.zindex, reverse=False)
 
-    def removeTile(self,tile):
+    def removeTile(self,tile,order_remove_reversed = False):
         x = int(tile.pos[0])
         y = int(tile.pos[1])
 
         if str(x)+";"+str(y) in self.playerTiles:
             level = len(self.playerTiles[str(x)+";"+str(y)])
             if level > 0 :
-                self.playerTiles[str(x)+";"+str(y)].pop(level-1)
+                if order_remove_reversed :
+                    self.playerTiles[str(x)+";"+str(y)].pop(0)
+                else :
+                    self.playerTiles[str(x)+";"+str(y)].pop(level-1)
 
         self.playerTiles_alreadySorted.clear()
         for cle, column in self.playerTiles.items():

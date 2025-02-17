@@ -83,7 +83,7 @@ class Player(Animal):
     
     def action(self):
         pressed_mouse_buttons = pygame.mouse.get_pressed()
-        if pressed_mouse_buttons[0] or pressed_mouse_buttons[2]:
+        if pressed_mouse_buttons[0] or pressed_mouse_buttons[1] or pressed_mouse_buttons[2]:
             if self.mouse_free:
                 subworld_tmp = self.game.world.subworlds[str(self.actualsubworld[0])+";"+str(self.actualsubworld[1])]
                 tile = self.getTileUnderPlayer()
@@ -92,6 +92,8 @@ class Player(Animal):
                         subworld_tmp.addTile(tile)
                     if pressed_mouse_buttons[2]:
                         subworld_tmp.removeTile(tile)
+                    if pressed_mouse_buttons[1]:
+                        subworld_tmp.removeTile(tile,order_remove_reversed=True)
 
                 self.mouse_free = False
         else :
