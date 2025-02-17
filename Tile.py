@@ -20,7 +20,7 @@ class Tile(Entity):
         self.surf = pygame.Surface((32,32))
         self.surf.fill((value,value,value))'''
 
-        self.surf = IMAGES_DICT["tile_"+self.id+".png"].copy()
+        self.surf = IMAGES_DICT["tile_"+self.id+".png"]
         self.rect = self.surf.get_rect(center = self.pos)
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/tiles/mask.png").convert_alpha())
 
