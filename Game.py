@@ -14,7 +14,6 @@ class Game:
 
         filenames = next(walk("assets/tiles/"), (None, None, []))[2]  # [] if no file
         for i in range(len(filenames)):
-            print(filenames[i])
             IMAGES_DICT[filenames[i]] = pygame.image.load("assets/tiles/"+filenames[i]).convert_alpha()
 
         self.w_ = 640
@@ -100,8 +99,9 @@ class Game:
             self.fillElements_to_display(subworld.rocks)
             self.fillElements_to_display(subworld.inoffensiveanimals)
 
-            for cle, column in subworld.playerBlocks.items():
-                self.fillElements_to_display(column)
+            '''for cle, column in subworld.playerBlocks.items():
+                self.fillElements_to_display(column)'''
+            self.fillElements_to_display(subworld.playerBlocks_alreadySorted)
 
             self.elements_to_display.append(subworld.door)
 

@@ -101,6 +101,7 @@ class SubWorld:
         self.inoffensiveanimals = []
 
         self.playerBlocks = {}
+        self.playerBlocks_alreadySorted = []
 
         self.tiles = []
 
@@ -121,6 +122,10 @@ class SubWorld:
             tile = Tile((x*TILE_SIZE+TILE_SIZE2,y*TILE_SIZE4-level*TILE_SIZE4),y,specific_id = "061")
 
         self.playerBlocks[str(x)+";"+str(y)].append(tile)
+
+
+        self.playerBlocks_alreadySorted.append(tile)
+        self.playerBlocks_alreadySorted.sort(key=lambda x: x.zindex, reverse=False)
 
     def addElements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH
