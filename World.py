@@ -125,8 +125,8 @@ class SubWorld:
     def addElements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH
         end_y = start_y+TILES_HEIGHT
-        scale = 20#13
-        octaves = 7#7
+        scale = 15#13
+        octaves = 5#7
         lacunarity = 1.0
         persistence = 1.0
         for y in range (start_y,end_y,1):
