@@ -135,6 +135,10 @@ class SubWorld:
             if level > 0 :
                 self.playerTiles[str(x)+";"+str(y)].pop(level-1)
 
+        self.playerTiles_alreadySorted.clear()
+        for cle, column in self.playerTiles.items():
+            for tile in column :
+                self.playerTiles_alreadySorted.append(tile)
         self.playerTiles_alreadySorted.sort(key=lambda x: x.zindex, reverse=False)
 
     def addElements(self,start_x,start_y):
