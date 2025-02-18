@@ -27,6 +27,7 @@ class World:
         self.actualrock_group = pygame.sprite.Group()
         self.actualwood_group = pygame.sprite.Group()
         self.actualtree_group = pygame.sprite.Group()
+        self.actualflower_group = pygame.sprite.Group()
 
         self.genWorldStart()
 
@@ -50,6 +51,7 @@ class World:
         self.actualrock_group.empty()
         self.actualwood_group.empty()
         self.actualtree_group.empty()
+        self.actualflower_group.empty()
 
         #fill both
         for cle, subworld in self.actualsubworlds.items():
@@ -65,6 +67,8 @@ class World:
                 wood.add(self.actualwood_group)
             for tree in subworld.trees:
                 tree.add(self.actualtree_group)
+            for flower in subworld.flowers:
+                flower.add(self.actualflower_group)
         
         self.actualtiles.sort(key=lambda x: x.zindex, reverse=False)
 

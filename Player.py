@@ -142,6 +142,13 @@ class Player(Animal):
             if sprite in self.game.world.subworlds[self.getKeyStrSubWorld()].woods :
                 self.game.world.subworlds[self.getKeyStrSubWorld()].woods.remove(sprite)
 
+        dict_collision_actualflower = self.checkCollide(self.game.world.actualflower_group)
+        if dict_collision_actualflower :
+            sprite = dict_collision_actualflower[0]
+            sprite.kill()
+            if sprite in self.game.world.subworlds[self.getKeyStrSubWorld()].flowers :
+                self.game.world.subworlds[self.getKeyStrSubWorld()].flowers.remove(sprite)
+
 
         if self.checkCollide(self.game.world.actualinoffensiveanimal_group) or self.checkCollide(self.game.world.actualtree_group) :
             self.pos -= self.vel
