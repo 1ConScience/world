@@ -49,6 +49,9 @@ class Tree(Entity):
     def __init__(self,rect,zindex):
         super().__init__(zindex) 
 
-        self.surf = pygame.image.load("assets/tiles/tile_tree.png").convert_alpha()
+        self.surf = pygame.image.load("assets/tiles/tile_treefd.png").convert_alpha()
+        
+        #self.surf = pygame.transform.scale(self.surf,(self.surf.get_width()*1.2,self.surf.get_height()*1.2))
+
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/tiles/tile_tree_mask.png").convert_alpha())
         self.rect = self.surf.get_rect(midbottom = rect.midbottom)

@@ -122,7 +122,7 @@ class SubWorld:
 
         level = len(self.playerTiles[str(x)+";"+str(y)])
 
-        tile = Tile((x,y-level*TILE_SIZE4),tile.zindex,specific_id = "061")
+        tile = Tile((x,y-level*TILE_SIZE4),tile.zindex,specific_id = "wooden")
 
         self.playerTiles[str(x)+";"+str(y)].append(tile)
 
@@ -167,7 +167,7 @@ class SubWorld:
                 
                 if not(x==0 and y==0) :
                     if tile.id == "040" :
-                        luck = random.randint(0,2)
+                        luck = random.randint(0,4)
                         if luck == 0 :
                             self.add_rock(tile.rect,y+1)
                     if tile.id == "025" :
@@ -175,6 +175,8 @@ class SubWorld:
                         if luck == 0 :
                             self.add_tree(tile.rect,y+1)
                     if tile.id == "027" :
+                        luck = random.randint(0,4)
+                        if luck == 0 :
                             self.add_flower(tile.rect,y+1)
                     elif tile.id == "029" or tile.id == "030" or tile.id == "031" or tile.id == "032" or tile.id == "033" or tile.id == "034" or tile.id == "035"  or tile.id == "036"  :
                         self.add_plant(tile.rect,y+1,tile.id)

@@ -76,6 +76,8 @@ class Player(Animal):
             self.actualsubworld = (self.actualsubworld[0],self.actualsubworld[1]-TILES_HEIGHT)
             newsubworldkey = self.actualsubworld
 
+        if newsubworldkey != None:
+            print(newsubworldkey)
         return newsubworldkey
     
     def getTileUnderPlayer(self):
