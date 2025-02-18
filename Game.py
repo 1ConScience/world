@@ -80,9 +80,14 @@ class Game:
                     inoffensiveanimal.move()
 
     def fillElements_to_display(self,list):
-        for elem in list :
+        '''for elem in list :
             if elem.rect.x >= self.camera.x-TILE_SIZE and elem.rect.x <= self.camera.x+self.w_ :
                 if elem.rect.y >= self.camera.y-TILE_SIZE and elem.rect.y <= self.camera.y+self.h_ :
+                    self.elements_to_display.append(elem)'''
+
+        for elem in list :
+            if elem.rect.centerx >= self.camera.x-TILE_SIZE*2 and elem.rect.centerx <= self.camera.x+self.w_+TILE_SIZE*2 :
+                if elem.rect.centery >= self.camera.y-TILE_SIZE*2 and elem.rect.centery <= self.camera.y+self.h_+TILE_SIZE*2 :
                     self.elements_to_display.append(elem)
 
     def display(self):
