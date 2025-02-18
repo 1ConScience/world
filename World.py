@@ -26,6 +26,7 @@ class World:
         self.actualinoffensiveanimal_group = pygame.sprite.Group()
         self.actualrock_group = pygame.sprite.Group()
         self.actualwood_group = pygame.sprite.Group()
+        self.actualtree_group = pygame.sprite.Group()
 
         self.genWorldStart()
 
@@ -48,6 +49,7 @@ class World:
         self.actualinoffensiveanimal_group.empty()
         self.actualrock_group.empty()
         self.actualwood_group.empty()
+        self.actualtree_group.empty()
 
         #fill both
         for cle, subworld in self.actualsubworlds.items():
@@ -61,9 +63,8 @@ class World:
                 rock.add(self.actualrock_group)
             for wood in subworld.woods:
                 wood.add(self.actualwood_group)
-
-            for tile in subworld.door.tiles_for_collision:
-                tile.add(self.actualrock_group)
+            for tree in subworld.trees:
+                tree.add(self.actualtree_group)
         
         self.actualtiles.sort(key=lambda x: x.zindex, reverse=False)
 
@@ -98,6 +99,7 @@ class SubWorld:
         self.plants = []
         self.rocks = []
         self.woods = []
+        self.trees = []
         self.inoffensiveanimals = []
 
         self.playerTiles = {}
@@ -106,8 +108,6 @@ class SubWorld:
         self.tiles = []
 
         self.addElements(self.key[0]-round(TILES_WIDTH2),self.key[1]-round(TILES_HEIGHT2))
-
-        self.door = Door(key)
 
     def addTile(self,tile):
         x = int(tile.pos[0])
@@ -147,8 +147,8 @@ class SubWorld:
     def addElements(self,start_x,start_y):
         end_x = start_x+TILES_WIDTH
         end_y = start_y+TILES_HEIGHT
-        scale = 15#13
-        octaves = 5#7
+        scale = 25#13
+        octaves = 10#7
         lacunarity = 1.0
         persistence = 1.0
         for y in range (start_y,end_y,1):
@@ -166,7 +166,11 @@ class SubWorld:
                         luck = random.randint(0,2)
                         if luck == 0 :
                             self.add_rock(tile.rect,y+1)
-                        else :
+                    if tile.id == "025" :
+                        luck = random.randint(0,8)
+                        if luck == 0 :
+                            self.add_tree(tile.rect,y+1)
+                    if tile.id == "027" :
                             self.add_flower(tile.rect,y+1)
                     elif tile.id == "029" or tile.id == "030" or tile.id == "031" or tile.id == "032" or tile.id == "033" or tile.id == "034" or tile.id == "035"  or tile.id == "036"  :
                         self.add_plant(tile.rect,y+1,tile.id)
@@ -194,6 +198,10 @@ class SubWorld:
     def add_wood(self,pos,zindex):
         wood = Wood(pos,zindex)
         self.woods.append(wood)
+
+    def add_tree(self,pos,zindex):
+        tree = Tree(pos,zindex)
+        self.trees.append(tree)
 
     def add_rock(self,pos,zindex):
         rock = Rock(pos,zindex)

@@ -96,11 +96,10 @@ class Game:
             self.fillElements_to_display(subworld.flowers)
             self.fillElements_to_display(subworld.plants)
             self.fillElements_to_display(subworld.woods)
+            self.fillElements_to_display(subworld.trees)
             self.fillElements_to_display(subworld.rocks)
             self.fillElements_to_display(subworld.inoffensiveanimals)
             self.fillElements_to_display(subworld.playerTiles_alreadySorted)
-
-            self.elements_to_display.append(subworld.door)
 
         self.elements_to_display.append(self.player)
 

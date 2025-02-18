@@ -55,7 +55,10 @@ class Player(Animal):
         self.current_frame = 0 #that keeps track on the current time or current frame since last the index switched.
         self.animation_frames = 8 #that define how many seconds or frames should pass before switching image.
 
-        self.mouse_free = True
+        self.mouse_frames_cpt = 0
+
+    def getKeyStrSubWorld(self):
+        return str(self.actualsubworld[0])+";"+str(self.actualsubworld[1])
 
     def testNewSubworldkey(self):
         newsubworldkey = None
@@ -76,29 +79,29 @@ class Player(Animal):
         return newsubworldkey
     
     def getTileUnderPlayer(self):
-        subworld = self.game.world.subworlds[str(self.actualsubworld[0])+";"+str(self.actualsubworld[1])]
+        subworld = self.game.world.subworlds[self.getKeyStrSubWorld()]
         for tile in subworld.tiles:
             if pygame.sprite.collide_mask(self, tile):
                 return tile
     
     def action(self):
         pressed_mouse_buttons = pygame.mouse.get_pressed(num_buttons=5)
-        print(pressed_mouse_buttons)
-        if pressed_mouse_buttons[0] or pressed_mouse_buttons[3] or pressed_mouse_buttons[4]:
-            if self.mouse_free:
-                subworld_tmp = self.game.world.subworlds[str(self.actualsubworld[0])+";"+str(self.actualsubworld[1])]
+        if pressed_mouse_buttons[2] or pressed_mouse_buttons[3] or pressed_mouse_buttons[4]:
+            if self.mouse_frames_cpt == 0:
+                subworld_tmp = self.game.world.subworlds[self.getKeyStrSubWorld()]
                 tile = self.getTileUnderPlayer()
                 if tile != None :
-                    if pressed_mouse_buttons[0]:
+                    if pressed_mouse_buttons[2]:
                         subworld_tmp.addTile(tile)
                     if pressed_mouse_buttons[4]:
                         subworld_tmp.removeTile(tile)
                     if pressed_mouse_buttons[3]:
                         subworld_tmp.removeTile(tile,order_remove_reversed=True)
 
-                self.mouse_free = False
-        else :
-            self.mouse_free = True
+            self.mouse_frames_cpt +=1
+
+        if self.mouse_frames_cpt > 10: 
+            self.mouse_frames_cpt = 0
 
     def move(self):
         self.vel = vec(0,0)
@@ -124,7 +127,23 @@ class Player(Animal):
             self.pos -= self.vel*0.5
             self.rect.center = self.pos 
             
-        if self.checkCollide(self.game.world.actualinoffensiveanimal_group) or self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) :
+
+        dict_collision_actualrock = self.checkCollide(self.game.world.actualrock_group)
+        if dict_collision_actualrock :
+            sprite = dict_collision_actualrock[0]
+            sprite.kill()
+            if sprite in self.game.world.subworlds[self.getKeyStrSubWorld()].rocks :
+                self.game.world.subworlds[self.getKeyStrSubWorld()].rocks.remove(sprite)
+
+        dict_collision_actualwood = self.checkCollide(self.game.world.actualwood_group)
+        if dict_collision_actualwood :
+            sprite = dict_collision_actualwood[0]
+            sprite.kill()
+            if sprite in self.game.world.subworlds[self.getKeyStrSubWorld()].woods :
+                self.game.world.subworlds[self.getKeyStrSubWorld()].woods.remove(sprite)
+
+
+        if self.checkCollide(self.game.world.actualinoffensiveanimal_group) or self.checkCollide(self.game.world.actualtree_group) :
             self.pos -= self.vel
             self.rect.center = self.pos 
 

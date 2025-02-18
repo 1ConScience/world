@@ -16,7 +16,7 @@ class Object(Entity):
 class Flower(Object):
     def __init__(self,rect,zindex):
 
-        id = random.randint(41,44)
+        id = random.randint(41,45)
         idstr = "0"+str(id)
 
         super().__init__(rect,idstr,zindex) 
@@ -44,3 +44,11 @@ class Rock(Object):
         
         super().__init__(rect,idstr,zindex) 
         self.mask = pygame.mask.from_surface(pygame.image.load("assets/tiles/rock_mask.png").convert_alpha())
+
+class Tree(Entity):
+    def __init__(self,rect,zindex):
+        super().__init__(zindex) 
+
+        self.surf = pygame.image.load("assets/tiles/tile_tree.png").convert_alpha()
+        self.mask = pygame.mask.from_surface(pygame.image.load("assets/tiles/tile_tree_mask.png").convert_alpha())
+        self.rect = self.surf.get_rect(midbottom = rect.midbottom)

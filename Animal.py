@@ -36,9 +36,7 @@ class Animal(Entity):
 
     def checkCollide(self,group):
         collide = pygame.sprite.spritecollide(self, group, False, collided = pygame.sprite.collide_mask)
-        if collide :
-            return True
-        return False
+        return collide
 
     def move(self):
         
@@ -56,7 +54,7 @@ class Animal(Entity):
 
         self.rect.center = self.pos 
              
-        if self.checkCollide(self.game.world.actualwater_group) or self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) or self.checkCollide(self.game.player_group) or self.reachBorders() :
+        if self.checkCollide(self.game.world.actualtree_group) or self.checkCollide(self.game.world.actualwater_group) or self.checkCollide(self.game.world.actualrock_group) or self.checkCollide(self.game.world.actualwood_group) or self.checkCollide(self.game.player_group) or self.reachBorders() :
             if self.change_dir_cpt >0:
                 self.pos -= self.vel
                 self.rect.center = self.pos
